@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".VerificationActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="لقد أرسلنا إليك رسالة تحقق عبر البريد الإلكتروني. يمكنك إتمام التحقق من خلال فتح الرابط في البريد أو إدخال رمز التحقق أدناه."
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:gravity="center"
+        android:padding="16dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etVerificationCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="أدخل رمز التحقق (اختياري)"
+            android:inputType="number"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnVerify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="تحقق"/>
+
+
+    <!-- تحت العناصر الحالية -->
+    <TextView
+        android:id="@+id/tvTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnResendCode"
+        android:textColor="#000"
+        android:textSize="14sp"/>
+
+    <Button
+        android:id="@+id/btnResendCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="إعادة إرسال الرمز"
+        android:enabled="false"/>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="إذا فتحت الرابط في بريدك الإلكتروني، سيتم التحقق تلقائيًا عند عودتك إلى التطبيق."
+        android:textSize="14sp"
+        android:textColor="#555"
+        android:gravity="center"
+        android:padding="8dp"/>
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- العنصر الأول: لون الخلفية -->
+    <item android:drawable="@color/paadeng"/>
+
+    <!-- العنصر الثاني: الصورة بصيغة VectorDrawable -->
+    <item android:drawable="@drawable/logohome"
+        android:top="300dp"
+        android:left="100dp"
+        android:right="100dp"
+        android:bottom="300dp"
+
+        />
+
+</layer-list>

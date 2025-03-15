@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#075E54"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:elevation="4dp" />
+
+
+    <EditText
+        android:id="@+id/start_date_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="التاريخ الأول (yyyy-MM-dd HH:mm:ss)"
+        android:inputType="datetime" />
+
+    <EditText
+        android:id="@+id/end_date_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="التاريخ الأخير (yyyy-MM-dd HH:mm:ss)"
+        android:inputType="datetime" />
+
+    <Button
+        android:id="@+id/filter_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="فلترة" />
+
+
+    <Spinner
+        android:id="@+id/currency_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:spinnerMode="dropdown" />
+
+
+
+    <!-- TextView to display the sum of total_amount -->
+    <TextView
+        android:id="@+id/total_sum_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="مجموع القيم: 0"
+        android:textSize="18sp"
+        android:paddingTop="8dp" />
+
+    <ListView
+        android:id="@+id/total_account_updates_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
+</LinearLayout>

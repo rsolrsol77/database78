@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_main_record"
+        android:title="إدخال الجدول الرئيسي"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sub_record"
+        android:title="إدخال الجدول الفرعي"
+        android:orderInCategory="101"
+        app:showAsAction="never" />
+</menu>

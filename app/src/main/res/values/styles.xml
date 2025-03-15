@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Theme الرئيسي للتطبيق -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- لون شريط الأدوات -->
+        <item name="colorPrimary">#FF075E54</item>
+        <!-- لون شريط الأدوات الداكن -->
+        <item name="colorPrimaryDark">#FF075E54</item>
+        <!-- لون شريط الحالة -->
+        <item name="android:statusBarColor">#FF075E54</item>
+        <!-- لون النص في شريط الأدوات -->
+        <item name="android:textColorPrimary">@android:color/white</item>
+
+    </style>
+
+
+
+    <!-- داخل ملف res/values/styles.xml -->
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDarkn</item>
+    </style>
+
+
+
+
+
+</resources>

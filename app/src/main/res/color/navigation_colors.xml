@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- اللون النشط عند تحديد العنصر -->
+    <item android:color="@color/bottom_nav_active" android:state_checked="true" />
+
+    <!-- اللون غير النشط عندما لا يكون العنصر محددًا -->
+    <item android:color="@color/bottom_nav_inactive" android:state_checked="false" />
+</selector>

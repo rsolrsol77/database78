@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Database78</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name_warehouse">أسم المستودع :</string>
+    <string name="warehouse_location">موقع المستودع :</string>
+    <string name="warehouse_information">معلومات عن المستودع :</string>
+    <string name="created">أنشاء</string>
+    <string name="select_main_record">أضغط لأختيار المستودع</string>
+    <string name="material">أسم المادة :</string>
+    <string name="quantity">الكمية :</string>
+    <string name="add_sub_record">أدخال</string>
+    <string name="create_a_warehouse">أنشاء مستودع</string>
+    <string name="enter_materials">أدخال المواد</string>
+    <string name="enter_name">ادخل الاسم</string>
+    <string name="enter_quantity">ادخل العدد</string>
+    <string name="buyer_name">أسم المشتري :</string>
+    <string name="phone">رقم الهاتف :</string>
+    <string name="address">عنوان المشتري :</string>
+    <string name="purchase_date">تاريخ الشراء :</string>
+    <string name="final_amount">المبلغ النهائي :</string>
+    <string name="order_information">معلومات عن الطلب :</string>
+    <string name="order_status">حالة الطلب :</string>
+    <string name="enter_phone">أدخل رقم الهاتف</string>
+    <string name="enter_address">أدخل العنوان</string>
+    <string name="enter_date">أدخل التاريخ yyyy-MM-dd</string>
+    <string name="enter_amount">أدخل المبلغ</string>
+    <string name="optional">(أختياري)</string>
+    <string name="click_to_add_an_item">أضغط لأضافة مادة</string>
+    <string name="double_click_to_select_a_subject">أضغط مرتين لأختيار مادة</string>
+    <string name="unity">الوحدة</string>
+    <string name="quantityy">الكمية</string>
+    <string name="id">: id</string>
+    <string name="items">المواد :</string>
+    <string name="stocked_materials">ألمواد المخزونة :</string>
+    <string name="enter_data_to_create_warehouse">أدخل البيانات لأنشاء مستودع</string>
+    <string name="add_material_to_warehouse">أضافة مادة الى مستودع</string>
+    <string name="edit">تعديل</string>
+    <string name="delete">حذف</string>
+    <string name="warehouse_contents">محتويات المستودع</string>
+    <string name="items_sold">المواد التي تم بيعها</string>
+    <string name="warehouses">المستودعات</string>
+    <string name="sales">المبيعات</string>
+</resources>

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+
+
+    <!-- شريط أزرار علوي للتبديل بين الجدول الرئيسي والفرعي -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="1dp">
+
+        <!-- الزر الأول -->
+        <LinearLayout
+            android:id="@+id/btn_main_record"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/r4btn_main"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_marginEnd="5dp">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/warehouse3"
+                android:layout_gravity="left"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/enter_amount"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/create_a_warehouse"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                />
+
+
+        </LinearLayout>
+
+
+        <!-- الزر الثاني -->
+        <LinearLayout
+            android:id="@+id/btn_sub_record"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/r4btn_sub"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_marginStart="5dp">
+
+            <ImageView
+
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/materialmanagement2"
+                android:layout_gravity="left"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/enter_amount" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/enter_materials"
+                android:textColor="#333333"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+    <!-- واجهة إدخال البيانات للسجل الرئيسي -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="visible"
+        android:id="@+id/main_record_layout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_data_to_create_warehouse"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"/>
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name_warehouse"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:background="@drawable/m1"
+            android:padding="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/warehouse_location"
+            android:textSize="16sp"
+            android:paddingTop="16dp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <EditText
+            android:id="@+id/course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@drawable/m1"
+            android:textAlignment="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/warehouse_information"
+            android:textSize="16sp"
+            android:paddingTop="16dp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <EditText
+            android:id="@+id/fee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:background="@drawable/m1"
+            android:padding="8dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/created"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/r1"
+            android:textStyle="bold"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+    </ScrollView>
+
+    <!-- واجهة إدخال البيانات للسجل الفرعي -->
+    <ScrollView
+        android:id="@+id/sub_record_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:paddingBottom="16dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_material_to_warehouse"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"/>
+
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_select_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_main_record"
+            android:background="@drawable/r1"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/white" />
+
+
+        <!-- TextView لإظهار السجل المختار -->
+        <TextView
+            android:id="@+id/selected_record_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="المستودع المحدد: لم يتم الاختيار"
+            android:textSize="16sp"
+            android:paddingTop="8dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginVertical="40dp"
+            android:textColor="@android:color/black" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/material"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <EditText
+            android:id="@+id/material"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_name"
+            android:inputType="text"
+
+            android:background="@drawable/m1"
+            android:padding="8dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/quantity"
+                android:textSize="16sp"
+                android:paddingTop="16dp"
+                android:textStyle="bold"
+                android:layout_marginTop="15dp"
+                android:paddingBottom="8dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+
+                <EditText
+                    android:id="@+id/quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_quantity"
+                    android:inputType="number"
+                    android:background="@drawable/m1"
+                    android:padding="8dp" />
+
+
+
+
+                <Spinner
+                    android:id="@+id/spinner_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/units_array" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_add_sub_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_sub_record"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/r1"
+            android:textStyle="bold"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    </ScrollView>
+
+
+
+</LinearLayout>
+
+
+

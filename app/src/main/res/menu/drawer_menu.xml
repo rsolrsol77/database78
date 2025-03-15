@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_total_account_updates"
+        android:title="الواردات المالية"
+        android:icon="@drawable/baseline_home_24" />
+
+    <item
+        android:id="@+id/action_filter_total_account_updates"
+        android:title="تصفية الواردات المالية"
+        android:icon="@drawable/baseline_home_24" />
+
+    <item
+        android:id="@+id/btnRevenueAnalysis"
+        android:title="تحليل الأيرادات"
+        android:icon="@drawable/baseline_home_24" />
+
+    <item
+        android:id="@+id/btnTop"
+        android:title="تحليل المنتجات"
+        android:icon="@drawable/baseline_home_24" />
+
+    <item
+        android:id="@+id/btnLogOut"
+        android:title="تسجيل الخروج"
+        android:icon="@drawable/baseline_home_24" />
+</menu>

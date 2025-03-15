@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_main"
+        android:icon="@drawable/homehome"
+        android:title="" />
+    <item
+        android:id="@+id/navigation_sales"
+        android:icon="@drawable/saleshome"
+        android:title="" />
+    <item
+        android:id="@+id/navigation_combined"
+        android:icon="@drawable/viewhome"
+        android:title="" />
+    <item
+        android:id="@+id/navigation_updates"
+        android:icon="@drawable/updateshome"
+        android:title="" /> <!-- إضافة خيار "آخر التحديثات" -->
+
+
+
+
+
+</menu>

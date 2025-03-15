@@ -1,0 +1,8 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- حالة الزر المختار -->
+    <item android:state_selected="true"
+        android:color="@color/selected_text_color" />
+    <!-- حالة الزر غير المختار -->
+    <item android:state_selected="false"
+        android:color="@color/unselected_text_color" />
+</selector>

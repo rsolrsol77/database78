@@ -1,0 +1,16 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- حالة الزر المختار -->
+    <item android:state_selected="true">
+        <shape>
+            <solid android:color="@color/selected_button_color" />
+            <corners android:radius="15dp" /> <!-- نصف قطر الزوايا -->
+        </shape>
+    </item>
+    <!-- حالة الزر غير المختار -->
+    <item android:state_selected="false">
+        <shape>
+            <solid android:color="@color/unselected_button_color" />
+            <corners android:radius="15dp" /> <!-- نصف قطر الزوايا -->
+        </shape>
+    </item>
+</selector>
