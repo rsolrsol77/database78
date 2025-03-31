@@ -1,3 +1,4 @@
+
 package com.example.database78;
 
 import android.content.Context;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-       //loog in
+        //loog in
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -102,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
             // استعادة البيانات من Firebase إذا كان هناك اتصال
             if (isNetworkConnected()) {
                 DatabaseHelper.syncFromFirebase(this);
+
+                DatabaseHelper.syncPendingOperations(MainActivity.this); // إضافة هذا السطر بعد syncFromFirebase
+
             }
 
         }

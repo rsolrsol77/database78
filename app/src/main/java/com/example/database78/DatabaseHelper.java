@@ -1,8 +1,10 @@
 
 package com.example.database78;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -17,7 +19,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -76,6 +82,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_TOTAL_ACCOUNT_UPDATES = "total_account_updates";  // جدول التحديثات الكلية
     private static final String COLUMN_TOTAL_ACCOUNT_ID = "total_account_id";
     private static final String COLUMN_TOTAL_TIMESTAMP = "total_timestamp";
+
+
+
+
+    // جدول العمليات المعلقة
+    private static final String TABLE_PENDING_OPERATIONS = "pending_operations";
+    private static final String COLUMN_OPERATION_ID = "operation_id";
+    private static final String COLUMN_OPERATION_TYPE = "operation_type";
+    private static final String COLUMN_TABLE_NAME = "table_name";
+    private static final String COLUMN_RECORD_ID = "record_id";
+    private static final String COLUMN_DATA = "data";
+    private static final String COLUMN_TIMESTAMP_OP = "timestamp_op";
+
+
 
 
 
@@ -156,6 +176,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
+
+        // إنشاء جدول العمليات المعلقة
+        String CREATE_TABLE_PENDING_OPERATIONS = "CREATE TABLE " + TABLE_PENDING_OPERATIONS + "("
+                + COLUMN_OPERATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_OPERATION_TYPE + " TEXT, "
+                + COLUMN_TABLE_NAME + " TEXT, "
+                + COLUMN_RECORD_ID + " TEXT, "
+                + COLUMN_DATA + " TEXT, "
+                + COLUMN_TIMESTAMP_OP + " DATETIME DEFAULT CURRENT_TIMESTAMP)";
+        db.execSQL(CREATE_TABLE_PENDING_OPERATIONS);
+
+
+
+
+
+
+
+
     }
 
     @Override
@@ -166,6 +204,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SALES_ITEMS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_UPDATES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TOTAL_ACCOUNT_UPDATES);
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PENDING_OPERATIONS); // إضافة هذا السطر
 
         onCreate(db);
     }
@@ -281,5 +321,122 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-}
 
+
+
+
+    // دالة لإضافة عملية معلقة
+    public static void addPendingOperation(SQLiteDatabase db, String operationType, String tableName, String recordId, ContentValues data) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_OPERATION_TYPE, operationType);
+        values.put(COLUMN_TABLE_NAME, tableName);
+        values.put(COLUMN_RECORD_ID, recordId);
+        values.put(COLUMN_DATA, dataToString(data)); // تحويل ContentValues إلى String
+        db.insert(TABLE_PENDING_OPERATIONS, null, values);
+    }
+
+    // دالة لتحويل ContentValues إلى String
+    private static String dataToString(ContentValues data) {
+        JSONObject json = new JSONObject();
+        try {
+            for (Map.Entry<String, Object> entry : data.valueSet()) {
+                json.put(entry.getKey(), entry.getValue());
+            }
+            return json.toString();
+        } catch (JSONException e) {
+            Log.e("DatabaseHelper", "Error converting to JSON: " + e.getMessage());
+            return "";
+        }
+    }
+
+    // دالة لتحويل String إلى ContentValues
+    private static ContentValues stringToData(String dataString) {
+        ContentValues values = new ContentValues();
+        try {
+            JSONObject json = new JSONObject(dataString);
+            Iterator<String> keys = json.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                Object value = json.get(key);
+                if (value instanceof String) {
+                    values.put(key, (String) value);
+                } else if (value instanceof Integer) {
+                    values.put(key, (Integer) value);
+                } else if (value instanceof Long) {
+                    values.put(key, (Long) value);
+                }
+            }
+        } catch (JSONException e) {
+            Log.e("DatabaseHelper", "Error parsing JSON: " + e.getMessage());
+        }
+        return values;
+    }
+
+    // دالة لمزامنة العمليات المعلقة
+    public static void syncPendingOperations(Context context) {
+        SQLiteDatabase db = new DatabaseHelper(context).getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PENDING_OPERATIONS, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") String operationType = cursor.getString(cursor.getColumnIndex(COLUMN_OPERATION_TYPE));
+                @SuppressLint("Range") String tableName = cursor.getString(cursor.getColumnIndex(COLUMN_TABLE_NAME));
+                @SuppressLint("Range") String recordId = cursor.getString(cursor.getColumnIndex(COLUMN_RECORD_ID));
+                @SuppressLint("Range") String dataString = cursor.getString(cursor.getColumnIndex(COLUMN_DATA));
+                @SuppressLint("Range") int operationId = cursor.getInt(cursor.getColumnIndex(COLUMN_OPERATION_ID));
+
+                ContentValues data = stringToData(dataString);
+
+                // تنفيذ العملية على Firebase
+                boolean success = executeFirebaseOperation(operationType, tableName, recordId, data);
+
+                if (success) {
+                    // حذف العملية بعد النجاح
+                    db.delete(TABLE_PENDING_OPERATIONS, COLUMN_OPERATION_ID + "=?", new String[]{String.valueOf(operationId)});
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+    }
+
+    // دالة مساعدة لتنفيذ العمليات على Firebase
+    private static boolean executeFirebaseOperation(String operationType, String tableName, String recordId, ContentValues data) {
+        try {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user == null) return false;
+
+            DatabaseReference ref = FirebaseDatabase.getInstance()
+                    .getReference("users/" + user.getUid() + "/" + tableName + "/" + recordId);
+
+            switch (operationType) {
+                case "INSERT":
+                case "UPDATE":
+                    // تحديث جميع الحقول الموجودة في data
+                    Map<String, Object> updates = new HashMap<>();
+                    for (String key : data.keySet()) {
+                        updates.put(key, data.get(key));
+                    }
+                    ref.updateChildren(updates);
+                    break;
+                case "DELETE":
+                    ref.removeValue();
+                    break;
+            }
+            return true;
+        } catch (Exception e) {
+            Log.e("PendingOps", "Error executing operation: " + e.getMessage());
+            return false;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+}

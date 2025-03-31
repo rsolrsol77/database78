@@ -1,8 +1,13 @@
+
 package com.example.database78;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -190,7 +195,19 @@ public class edit extends AppCompatActivity {
 
                 // البحث عن السجلات الفرعية المرتبطة بالسجل الرئيسي
                 Query query = subRef.orderByChild("parent_id").equalTo(Integer.parseInt(id));
+
+
+                // إضافة عملية DELETE المعلقة
+                DatabaseHelper.addPendingOperation(db, "DELETE", "records", id, new ContentValues());
+
+                // محاولة المزامنة الفورية إذا كان الاتصال متاحًا
+                if (isNetworkConnected()) {
+                    DatabaseHelper.syncPendingOperations(this);
+                }
+
+
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
+
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         // حذف كل سجل فرعي
@@ -213,7 +230,12 @@ public class edit extends AppCompatActivity {
                                 .addOnFailureListener(e -> {
                                     Log.e("Firebase", "فشل حذف السجل الرئيسي: " + e.getMessage());
                                 });
+
+
+
                     }
+
+
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -239,6 +261,20 @@ public class edit extends AppCompatActivity {
         SQLiteDatabase db = null;
         try {
             db = dbHelper.getWritableDatabase();
+
+            // جلب parent_id من قاعدة البيانات
+            Cursor cursor = db.rawQuery(
+                    "SELECT parent_id FROM sub_records WHERE id = ?",
+                    new String[]{String.valueOf(subRecordId)}
+            );
+
+            int parentId = -1;
+            if (cursor.moveToFirst()) {
+                parentId = cursor.getInt(0); // الحصول على parent_id
+            }
+            cursor.close();
+
+
             int rowsDeleted = db.delete("sub_records", "id = ?", new String[]{String.valueOf(subRecordId)});
             if (rowsDeleted > 0) {
 
@@ -248,6 +284,18 @@ public class edit extends AppCompatActivity {
                             .getReference("users/" + user.getUid() + "/sub_records/" + subRecordId);
                     ref.removeValue();
                 }
+
+
+                // إضافة عملية DELETE المعلقة
+                ContentValues data = new ContentValues();
+                data.put("parent_id", parentId); // استخدام parent_id المُستَجلَب
+                DatabaseHelper.addPendingOperation(db, "DELETE", "sub_records", String.valueOf(subRecordId), data);
+
+                // محاولة المزامنة الفورية إذا كان الاتصال متاحًا
+                if (isNetworkConnected()) {
+                    DatabaseHelper.syncPendingOperations(this);
+                }
+
 
                 Toast.makeText(this, "تم حذف السجل الفرعي بنجاح", Toast.LENGTH_LONG).show();
             } else {
@@ -317,7 +365,18 @@ public class edit extends AppCompatActivity {
                 mainValues.put("name", name);
                 mainValues.put("course", course);
                 mainValues.put("fee", fee);
-                DatabaseHelper.syncUpdateToFirebase("records", id, mainValues);
+
+
+
+                // إضافة عملية UPDATE المعلقة
+                DatabaseHelper.addPendingOperation(db, "UPDATE", "records", id, mainValues);
+
+                // محاولة المزامنة الفورية إذا كان الاتصال متاحًا
+                if (isNetworkConnected()) {
+                    DatabaseHelper.syncPendingOperations(this);
+                }
+
+
 
                 // مزامنة التغييرات للسجلات الفرعية
                 for (int i = 0; i < subRecords.size(); i++) {
@@ -356,6 +415,14 @@ public class edit extends AppCompatActivity {
             Log.e("UPDATE_ERROR", "Error updating record: ", ex);
             Toast.makeText(this, "فشل في تحديث السجل: " + ex.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
     }
 
 

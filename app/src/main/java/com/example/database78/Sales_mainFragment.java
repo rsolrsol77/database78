@@ -1,3 +1,4 @@
+
 package com.example.database78;
 
 import android.annotation.SuppressLint;
@@ -29,11 +30,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -318,10 +314,11 @@ public class Sales_mainFragment extends Fragment {
 
 
 
-            // المزامنة مع Firebase
-            if (isNetworkConnected()) {
-                DatabaseHelper.syncToFirebase("sales", firebaseValues);
-            }
+            // إضافة عملية INSERT لـ sales
+            ContentValues firebaseSalesValues = new ContentValues();
+            firebaseSalesValues.putAll(salesValues);
+            firebaseSalesValues.put("id", salesId);
+            DatabaseHelper.addPendingOperation(db, "INSERT", "sales", String.valueOf(salesId), firebaseSalesValues);
 
 
             // تسجيل تحديث الحساب الكلي
@@ -372,10 +369,12 @@ public class Sales_mainFragment extends Fragment {
                 ContentValues firebaseValues = new ContentValues();
                 firebaseValues.putAll(values);
                 firebaseValues.put("id", subRecordId); // إضافة الـ ID هنا
+                DatabaseHelper.addPendingOperation(db, "INSERT", "sales_items", String.valueOf(subRecordId), firebaseValues);
 
                 // المزامنة مع Firebase
+                // محاولة المزامنة الفورية إذا كان الاتصال متاحًا
                 if (isNetworkConnected()) {
-                    DatabaseHelper.syncToFirebase("sales_items", firebaseValues);
+                    DatabaseHelper.syncPendingOperations(getActivity());
                 }
             }
         }
@@ -401,18 +400,22 @@ public class Sales_mainFragment extends Fragment {
                         new String[]{String.valueOf(material.getId())}
                 );
 
+                int newQuantity = 0;
                 if (cursor.moveToFirst()) {
-                    @SuppressLint("Range") int newQuantity = cursor.getInt(cursor.getColumnIndex("quantity"));
-
-                    // 3. تحديث Firebase
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // <-- إصلاح هنا
-                    if (user != null && isNetworkConnected()) {
-                        DatabaseReference ref = FirebaseDatabase.getInstance()
-                                .getReference("users/" + user.getUid() + "/sub_records/" + material.getId());
-                        ref.child("quantity").setValue(newQuantity); // <-- تحديث الحقل مباشرةً
-                    }
+                    newQuantity = cursor.getInt(0);
                 }
                 cursor.close();
+
+                // 3. تسجيل عملية UPDATE في pending_operations
+                ContentValues data = new ContentValues();
+                data.put("quantity", newQuantity); // القيمة المطلقة الجديدة
+                DatabaseHelper.addPendingOperation(
+                        db,
+                        "UPDATE",
+                        "sub_records",
+                        String.valueOf(material.getId()),
+                        data
+                );
 
             } catch (Exception e) {
                 Log.e("DATABASE_ERROR", "Error: " + e.getMessage());
@@ -592,5 +595,3 @@ public class Sales_mainFragment extends Fragment {
         public void afterTextChanged(android.text.Editable s) {}
     }
 }
-
-

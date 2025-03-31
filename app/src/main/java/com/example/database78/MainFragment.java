@@ -1,3 +1,4 @@
+
 package com.example.database78;
 
 import android.annotation.SuppressLint;
@@ -364,9 +365,12 @@ public class MainFragment extends Fragment {
 
 
 
-                // المزامنة مع Firebase باستخدام الـ ID الصحيح
+                // إضافة العملية المعلقة
+                DatabaseHelper.addPendingOperation(db, "INSERT", "records", String.valueOf(newRowId), firebaseValues);
+
+                // محاولة المزامنة الفورية إذا كان الاتصال متاحًا
                 if (isNetworkConnected()) {
-                    DatabaseHelper.syncToFirebase("records", firebaseValues);
+                    DatabaseHelper.syncPendingOperations(getActivity());
                 }
 
 
@@ -412,6 +416,30 @@ public class MainFragment extends Fragment {
 
             long newRowId = db.insert("sub_records", null, values);
             if (newRowId != -1) {
+
+
+
+
+                // إضافة العملية المعلقة
+                ContentValues firebaseValues = new ContentValues();
+                firebaseValues.put("id", newRowId);
+                firebaseValues.put("parent_id", selectedRecordId);
+                firebaseValues.put("material", material);
+                firebaseValues.put("quantity", quantity);
+                firebaseValues.put("unit", selectedUnit);
+
+
+
+
+                DatabaseHelper.addPendingOperation(db, "INSERT", "sub_records", String.valueOf(newRowId), firebaseValues);
+
+                // محاولة المزامنة الفورية إذا كان الاتصال متاحًا
+                if (isNetworkConnected()) {
+                    DatabaseHelper.syncPendingOperations(getActivity());
+                }
+
+
+
 
 
                 // المزامنة مع Firebase باستخدام الـ ID من SQLite
@@ -479,5 +507,3 @@ public class MainFragment extends Fragment {
         }
     }
 }
-
-

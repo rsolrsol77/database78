@@ -1,3 +1,4 @@
+
 package com.example.database78;
 
 import android.annotation.SuppressLint;
@@ -21,18 +22,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -193,6 +190,17 @@ public class SalesEditActivity extends AppCompatActivity {
         int rowsAffected = db.delete("sales_items", "id = ?", new String[]{subRecordId});
 
 
+        // إضافة عملية DELETE المعلقة
+        ContentValues data = new ContentValues();
+        data.put("sales_id", salesId); // بيانات إضافية
+        DatabaseHelper.addPendingOperation(db, "DELETE", "sales_items", subRecordId, data);
+
+        // محاولة المزامنة الفورية
+        if (isNetworkConnected()) {
+            DatabaseHelper.syncPendingOperations(this);
+        }
+
+
         // حذف من Firebase
         if (isNetworkConnected()) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -246,61 +254,65 @@ public class SalesEditActivity extends AppCompatActivity {
         if (rowsAffected > 0) {
 
 
-                // مزامنة السجل الرئيسي مع Firebase
-                ContentValues firebaseValues = new ContentValues();
-                firebaseValues.putAll(values);
-                firebaseValues.put("id", salesId); // إضافة الـ ID
+            // مزامنة السجل الرئيسي مع Firebase
+            ContentValues firebaseValues = new ContentValues();
+            firebaseValues.putAll(values);
+            firebaseValues.put("id", salesId); // إضافة الـ ID
 
-                if (isNetworkConnected()) {
-                    DatabaseHelper.syncUpdateToFirebase("sales", salesId, firebaseValues);
-                }
+            // إضافة عملية UPDATE المعلقة
+            DatabaseHelper.addPendingOperation(db, "UPDATE", "sales", salesId, firebaseValues);
+
+            // محاولة المزامنة الفورية
+            if (isNetworkConnected()) {
+                DatabaseHelper.syncPendingOperations(this);
+            }
 
 
 
             // تحديث السجلات الفرعية
             if (!subMaterialViews.isEmpty()) {
-            for (int i = 0; i < subMaterialViews.size(); i++) {
-                String oldQuantity = getOldQuantityFromDatabase(subMaterialViews.get(i).getText().toString());  // جلب الكمية القديمة من قاعدة البيانات
-                String newQuantity = subQuantityViews.get(i).getText().toString();
+                for (int i = 0; i < subMaterialViews.size(); i++) {
+                    String oldQuantity = getOldQuantityFromDatabase(subMaterialViews.get(i).getText().toString());  // جلب الكمية القديمة من قاعدة البيانات
+                    String newQuantity = subQuantityViews.get(i).getText().toString();
 
 
 
 
-                if (!oldQuantity.equals(newQuantity)) {
-                    quantityChanged = true;  // إذا كانت الكمية مختلفة، تعيين المتغير
+                    if (!oldQuantity.equals(newQuantity)) {
+                        quantityChanged = true;  // إذا كانت الكمية مختلفة، تعيين المتغير
+                    }
+
+
+                    // الحصول على subRecordId بشكل آمن
+                    View subRecordView = subRecordsLayout.getChildAt(i);
+                    if (subRecordView == null) continue; // تخطي إذا كانت العناصر غير موجودة
+
+
+                    // 1. الحصول على subRecordId من TextView الموجود في الواجهة
+                    TextView tvSubId = (TextView) ((ViewGroup) subRecordsLayout.getChildAt(i)).findViewById(R.id.tv_id);
+                    String subRecordId = tvSubId.getText().toString(); // <-- تعريف subRecordId
+
+
+                    ContentValues subValues = new ContentValues();
+                    subValues.put("material", subMaterialViews.get(i).getText().toString());
+                    subValues.put("quantity", newQuantity);
+                    subValues.put("unit", subUnitViews.get(i).getText().toString());  // حفظ الوحدة من TextView
+                    subValues.put("sales_id", salesId); // إضافة sales_id
+
+
+                    db.update("sales_items", subValues, "sales_id = ? AND material = ?",
+                            new String[]{salesId, subMaterialViews.get(i).getText().toString()});
+
+
+
+                    // 3. مزامنة Firebase
+                    if (isNetworkConnected()) {
+                        ContentValues firebaseSubValues = new ContentValues();
+                        firebaseSubValues.putAll(subValues);
+                        firebaseSubValues.put("id", subRecordId); // إضافة الـ ID
+                        DatabaseHelper.syncUpdateToFirebase("sales_items", subRecordId, firebaseSubValues);
+                    }
                 }
-
-
-                // الحصول على subRecordId بشكل آمن
-                View subRecordView = subRecordsLayout.getChildAt(i);
-                if (subRecordView == null) continue; // تخطي إذا كانت العناصر غير موجودة
-
-
-                // 1. الحصول على subRecordId من TextView الموجود في الواجهة
-                TextView tvSubId = (TextView) ((ViewGroup) subRecordsLayout.getChildAt(i)).findViewById(R.id.tv_id);
-                String subRecordId = tvSubId.getText().toString(); // <-- تعريف subRecordId
-
-
-                ContentValues subValues = new ContentValues();
-                subValues.put("material", subMaterialViews.get(i).getText().toString());
-                subValues.put("quantity", newQuantity);
-                subValues.put("unit", subUnitViews.get(i).getText().toString());  // حفظ الوحدة من TextView
-                subValues.put("sales_id", salesId); // إضافة sales_id
-
-
-                db.update("sales_items", subValues, "sales_id = ? AND material = ?",
-                        new String[]{salesId, subMaterialViews.get(i).getText().toString()});
-
-
-
-                // 3. مزامنة Firebase
-                if (isNetworkConnected()) {
-                    ContentValues firebaseSubValues = new ContentValues();
-                    firebaseSubValues.putAll(subValues);
-                    firebaseSubValues.put("id", subRecordId); // إضافة الـ ID
-                    DatabaseHelper.syncUpdateToFirebase("sales_items", subRecordId, firebaseSubValues);
-                }
-            }
             }
 
 
@@ -380,39 +392,52 @@ public class SalesEditActivity extends AppCompatActivity {
     // دالة لحذف السجل الرئيسي والفرعي
     private void deleteSalesRecord() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.delete("sales", "id = ?", new String[]{salesId});
-        db.delete("sales_items", "sales_id = ?", new String[]{salesId});
+        db.beginTransaction(); // بدء Transaction لضمان التسجيل الذري
 
+        try {
+            // 1. جلب جميع السجلات الفرعية المرتبطة
+            Cursor subCursor = db.rawQuery(
+                    "SELECT id FROM sales_items WHERE sales_id = ?",
+                    new String[]{salesId}
+            );
 
-        // حذف من Firebase
-        if (isNetworkConnected()) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user != null) {
-                // حذف السجل الرئيسي
-                DatabaseReference salesRef = FirebaseDatabase.getInstance()
-                        .getReference("users/" + user.getUid() + "/sales/" + salesId);
-                salesRef.removeValue();
-
-                // حذف السجلات الفرعية المرتبطة
-                DatabaseReference itemsRef = FirebaseDatabase.getInstance()
-                        .getReference("users/" + user.getUid() + "/sales_items");
-                itemsRef.orderByChild("sales_id").equalTo(salesId).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot ds : snapshot.getChildren()) {
-                            ds.getRef().removeValue();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Log.e("Firebase", "Error deleting sub records: " + error.getMessage());
-                    }
-                });
+            // 2. تسجيل عمليات DELETE للسجلات الفرعية
+            while (subCursor.moveToNext()) {
+                @SuppressLint("Range") String subId = subCursor.getString(subCursor.getColumnIndex("id"));
+                DatabaseHelper.addPendingOperation(
+                        db,
+                        "DELETE",
+                        "sales_items",
+                        subId,
+                        new ContentValues() // يمكن إضافة بيانات إضافية إذا لزم الأمر
+                );
             }
+            subCursor.close();
+
+            // 3. تسجيل عملية DELETE للسجل الرئيسي
+            DatabaseHelper.addPendingOperation(
+                    db,
+                    "DELETE",
+                    "sales",
+                    salesId,
+                    new ContentValues()
+            );
+
+            // 4. حذف البيانات محليًا بعد التسجيل
+            db.delete("sales", "id = ?", new String[]{salesId});
+            db.delete("sales_items", "sales_id = ?", new String[]{salesId});
+
+            db.setTransactionSuccessful(); // تأكيد Transaction
+        } catch (Exception e) {
+            Log.e("DATABASE_ERROR", "Error deleting sales record: " + e.getMessage());
+        } finally {
+            db.endTransaction();
         }
 
-
+        // 5. محاولة المزامنة الفورية إذا كان الاتصال متاحًا
+        if (isNetworkConnected()) {
+            DatabaseHelper.syncPendingOperations(this);
+        }
 
         Toast.makeText(this, "Record Deleted", Toast.LENGTH_SHORT).show();
         finish();
