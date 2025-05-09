@@ -119,13 +119,13 @@ public class edit extends AppCompatActivity {
         // إضافة الصف العلوي للعناوين
         TableRow headerRow = new TableRow(this);
         TextView headerId = new TextView(this);
-        headerId.setText("ID");
+        headerId.setText(R.string.header_id);
         TextView headerMaterial = new TextView(this);
-        headerMaterial.setText("Material");
+        headerMaterial.setText(R.string.header_material);
         TextView headerQuantity = new TextView(this);
-        headerQuantity.setText("Quantity");
+        headerQuantity.setText(R.string.header_quantity);
         TextView headerUnit = new TextView(this);
-        headerUnit.setText("Unit");
+        headerUnit.setText(R.string.header_unit);
 
         headerRow.addView(headerId);
         headerRow.addView(headerMaterial);
@@ -245,14 +245,14 @@ public class edit extends AppCompatActivity {
             }
 
 
-            Toast.makeText(this, "تم حذف السجل الرئيسي بنجاح", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.the_master_record_was_deleted_successfully, Toast.LENGTH_LONG).show();
             edName.setText("");
             edCourse.setText("");
             edFee.setText("");
             edName.requestFocus();
             finish(); // إنهاء النشاط والعودة إلى النشاط السابق
         } catch (Exception ex) {
-            Toast.makeText(this, "فشل في حذف السجل الرئيسي", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.failed_to_delete_master_record, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -297,9 +297,9 @@ public class edit extends AppCompatActivity {
                 }
 
 
-                Toast.makeText(this, "تم حذف السجل الفرعي بنجاح", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.the_sup_record_was_deleted_successfully, Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "فشل في حذف السجل الفرعي", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.failed_to_delete_sub_record, Toast.LENGTH_LONG).show();
             }
         } catch (Exception ex) {
             Toast.makeText(this, "حدث خطأ أثناء حذف السجل الفرعي: " + ex.getMessage(), Toast.LENGTH_LONG).show();
@@ -317,7 +317,7 @@ public class edit extends AppCompatActivity {
             String fee = edFee.getText().toString();
 
             if (name.isEmpty() || course.isEmpty() || fee.isEmpty()) {
-                Toast.makeText(this, "الرجاء ملء جميع الحقول", Toast.LENGTH_LONG).show();
+                Toast.makeText(this,  R.string.please_fill_in_all_required_fields, Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -329,7 +329,7 @@ public class edit extends AppCompatActivity {
                 String unit = subUnitSpinners.get(i).getSelectedItem().toString();
 
                 if (material.isEmpty() || quantity.isEmpty() || unit.isEmpty()) {
-                    Toast.makeText(this, "الرجاء ملء جميع الحقول في السجلات الفرعية", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.please_fill_in_all_fields_in_the_sub_record, Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -337,7 +337,7 @@ public class edit extends AppCompatActivity {
                 try {
                     Integer.parseInt(quantity);
                 } catch (NumberFormatException e) {
-                    Toast.makeText(this, "الكمية في السجل الفرعي يجب أن تكون رقمًا صالحًا", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.the_quantity_in_the_sub_register_must_be_a_valid_number, Toast.LENGTH_LONG).show();
                     return;
                 }
             }
@@ -390,7 +390,7 @@ public class edit extends AppCompatActivity {
                     DatabaseHelper.syncUpdateToFirebase("sub_records", subId, subValues);
                 }
 
-                Toast.makeText(this, "تم تحديث السجل بنجاح", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.the_record_was_updated_successfully, Toast.LENGTH_LONG).show();
             }
 
 
@@ -409,7 +409,7 @@ public class edit extends AppCompatActivity {
                 }
             }
 
-            Toast.makeText(this, "تم تحديث السجل بنجاح", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.the_record_was_updated_successfully, Toast.LENGTH_LONG).show();
             finish(); // إنهاء النشاط والعودة إلى النشاط السابق
         } catch (Exception ex) {
             Log.e("UPDATE_ERROR", "Error updating record: ", ex);

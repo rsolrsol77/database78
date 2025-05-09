@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="#F5F5F5">
 
 
 
@@ -21,27 +22,29 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/buyer_name"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:paddingBottom="8dp" />
 
         <EditText
             android:id="@+id/buyer_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="@drawable/m1"
             android:inputType="text"
-            android:hint="@string/enter_name" />
+            android:hint="@string/enter_name"
+            android:maxLength="20"
+            android:textAlignment="center"/>
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/phone"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:layout_marginTop="5dp"
             android:textStyle="bold"
             android:paddingBottom="8dp" />
@@ -50,18 +53,20 @@
         <EditText
             android:id="@+id/phone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="@drawable/m1"
             android:inputType="number"
-            android:hint="@string/enter_phone" />
+            android:hint="@string/enter_phone"
+            android:maxLength="16"
+            android:textAlignment="center"/>
 
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/address"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:layout_marginTop="5dp"
             android:textStyle="bold"
             android:paddingBottom="8dp" />
@@ -70,17 +75,19 @@
         <EditText
             android:id="@+id/address"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="@drawable/m1"
             android:inputType="text"
-            android:hint="@string/enter_address" />
+            android:hint="@string/enter_address"
+            android:maxLength="20"
+            android:textAlignment="center"/>
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/purchase_date"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:layout_marginTop="5dp"
             android:textStyle="bold"
             android:paddingBottom="8dp" />
@@ -89,16 +96,18 @@
         <EditText
             android:id="@+id/date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="@drawable/m1"
             android:inputType="date"
-            android:hint="@string/enter_date" />
+            android:hint="@string/enter_date"
+            android:maxLength="10"
+            android:textAlignment="center"/>
 
 
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/add_material_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/r1"
@@ -111,7 +120,8 @@
             android:id="@+id/materials_list_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
             <!-- سيتم إضافة المواد هنا -->
         </LinearLayout>
 
@@ -128,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/final_amount"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:paddingTop="16dp"
                 android:textStyle="bold"
                 android:paddingBottom="8dp" />
@@ -137,26 +147,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:orientation="horizontal">
 
 
                 <EditText
                     android:id="@+id/total_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="2"
                     android:inputType="number"
                     android:background="@drawable/m1"
-                    android:hint="@string/enter_amount" />
+                    android:hint="@string/enter_amount"
+                    android:maxLength="10"
+                    android:textAlignment="center"/>
 
 
 
 
                 <Spinner
                     android:id="@+id/currency_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
                     android:entries="@array/currency_array" />
 
 
@@ -168,10 +180,10 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/order_information"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
             android:paddingBottom="8dp" />
@@ -181,17 +193,19 @@
         <EditText
             android:id="@+id/order_info"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="@drawable/m1"
             android:inputType="text"
-            android:hint="@string/optional" />
+            android:hint="@string/optional"
+            android:maxLength="30"
+            android:textAlignment="center"/>
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/order_status"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:layout_marginTop="5dp"
             android:textStyle="bold"
             android:paddingBottom="8dp" />
@@ -200,10 +214,12 @@
         <EditText
             android:id="@+id/order_status"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="@drawable/m1"
             android:inputType="text"
-            android:hint="@string/optional" />
+            android:hint="@string/optional"
+            android:maxLength="20"
+            android:textAlignment="center"/>
 
 
 

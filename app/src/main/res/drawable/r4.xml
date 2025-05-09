@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- الحالة عند الضغط -->
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="#D50062DE" /> <!-- لون مختلف عند الضغط -->
+            <corners android:radius="12dp" />
+            <stroke android:width="2dp" android:color="#D50062DE" />
+        </shape>
+    </item>
+
+    <!-- الحالة عند التعطيل -->
+    <item android:state_enabled="false">
+        <shape>
+            <solid android:color="#BDBDBD" /> <!-- لون باهت عند التعطيل -->
+            <corners android:radius="12dp" />
+            <stroke android:width="2dp" android:color="#9E9E9E" />
+        </shape>
+    </item>
+
+    <!-- الحالة العادية -->
+    <item>
+        <shape>
+            <solid android:color="#0062DE" /> <!-- لون الخلفية الأساسي -->
+            <corners android:radius="12dp" />
+            <stroke android:width="2dp" android:color="#0062DE" />
+            <padding android:left="16dp" android:right="16dp" android:top="8dp" android:bottom="8dp" />
+        </shape>
+    </item>
+
+</selector>

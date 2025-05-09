@@ -90,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/m1"
                 android:inputType="text"
+                android:maxLength="20"
                 android:hint="@string/enter_name" />
 
         </LinearLayout>
@@ -120,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/m1"
                 android:inputType="number"
+                android:maxLength="16"
                 android:hint="@string/enter_phone" />
 
         </LinearLayout>
@@ -159,6 +161,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/m1"
                 android:inputType="text"
+                android:maxLength="20"
                 android:hint="@string/enter_address" />
 
         </LinearLayout>
@@ -189,6 +192,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/m1"
                 android:inputType="date"
+                android:maxLength="10"
                 android:hint="@string/enter_date" />
 
         </LinearLayout>
@@ -228,6 +232,7 @@
                 android:layout_weight="1"
                 android:inputType="number"
                 android:background="@drawable/m1"
+                android:maxLength="10"
                 android:hint="@string/enter_amount" />
 
 
@@ -278,6 +283,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/m1"
                 android:inputType="text"
+                android:maxLength="30"
                 android:hint="@string/optional" />
 
 
@@ -309,6 +315,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/m1"
                 android:inputType="text"
+                android:maxLength="20"
                 android:hint="@string/optional" />
 
         </LinearLayout>

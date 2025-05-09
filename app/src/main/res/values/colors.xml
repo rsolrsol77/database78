@@ -23,6 +23,8 @@
     <color name="selected_text_color">#FFFFFFFF</color>
     <color name="unselected_text_color">#000000</color>
     <color name="paadeng">#FCFCFC</color>
+    <color name="login">#FBFBFB</color>
+    <color name="login2">#FF00924E</color>
 
 
 

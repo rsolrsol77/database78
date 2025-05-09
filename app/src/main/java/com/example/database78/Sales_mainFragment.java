@@ -129,7 +129,7 @@ public class Sales_mainFragment extends Fragment {
                 updateMaterialQuantities();
                 resetFields(); // تفريغ الحقول بعد الحفظ
             } else {
-                Toast.makeText(getActivity(), "يرجى ملء جميع الحقول المطلوبة", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.please_fill_in_all_required_fields, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -261,22 +261,62 @@ public class Sales_mainFragment extends Fragment {
 
 
 
+    // MainFragment.java
+
     private void logUpdate(String message) {
         SQLiteDatabase db = null;
         try {
             db = dbHelper.getWritableDatabase();
+
+            // 1. أدراج السجل محلياً والحصول على المعرف الجديد
             ContentValues values = new ContentValues();
             values.put("message", message);
-            db.insert("updates", null, values);
+            long newRowId = db.insert("updates", null, values);
+
+            if (newRowId != -1) {
+                // 2. قراءة الطابع الزمني الذي أنشأه SQLite
+                Cursor cursor = db.rawQuery(
+                        "SELECT timestamp FROM updates WHERE update_id = ?",
+                        new String[]{ String.valueOf(newRowId) }
+                );
+                String ts = null;
+                if (cursor.moveToFirst()) {
+                    ts = cursor.getString(0);
+                }
+                cursor.close();
+
+                if (ts != null) {
+                    // 3. تجهيز القيم للمزامنة
+                    ContentValues firebaseValues = new ContentValues();
+                    firebaseValues.put("message", message);
+                    firebaseValues.put("timestamp", ts);
+
+                    // 4. إضافة عملية INSERT معلقة لجدول updates
+                    DatabaseHelper.addPendingOperation(
+                            db,
+                            "INSERT",
+                            DatabaseHelper.TABLE_UPDATES,
+                            String.valueOf(newRowId),
+                            firebaseValues
+                    );
+
+                    // 5. محاولة المزامنة الفورية عند توفر الشبكة
+                    if (isNetworkConnected()) {
+                        DatabaseHelper.syncPendingOperations(getActivity());
+                    }
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getActivity(), "فشل في تسجيل التحديث: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),
+                    getString(R.string.failed_to_register_update) + e.getMessage(),
+                    Toast.LENGTH_LONG
+            ).show();
         } finally {
-            if (db != null) {
-                db.close();
-            }
+            if (db != null) db.close();
         }
     }
+
 
 
 
@@ -330,14 +370,32 @@ public class Sales_mainFragment extends Fragment {
             // تسجيل التحديث
             StringBuilder soldItems = new StringBuilder();
             for (Material material : materialsList) {
-                soldItems.append(material.getName()).append(" (الكمية: ").append(material.getQuantity()).append(" ").append(material.getUnit()).append("), ");
+                // تنسيق كل عنصر مع الترجمة
+                @SuppressLint("StringFormatMatches") String quantityText = getString(
+                        R.string.quantity_label,
+                        material.getQuantity(),
+                        material.getUnit()
+                );
+
+                soldItems.append(material.getName())
+                        .append(" (")
+                        .append(quantityText)
+                        .append(")")
+                        .append(getString(R.string.item_separator));
             }
-            String message = "تم بيع المواد التالية: " + soldItems.toString();
+
+            if (soldItems.length() > 0) {
+                // إزالة الفاصلة الإضافية في النهاية
+                soldItems.setLength(soldItems.length() - getString(R.string.item_separator).length());
+            }
+
+            String message = getString(
+                    R.string.sold_items_header) + " " + soldItems.toString();
             logUpdate(message);
 
 
         } else {
-            Toast.makeText(getActivity(), "فشل في حفظ المبيعات", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.failed_to_save_sales, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -381,7 +439,7 @@ public class Sales_mainFragment extends Fragment {
 
 
 
-        Toast.makeText(getActivity(), "تم حفظ المواد بنجاح", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.materials_saved_successfully, Toast.LENGTH_LONG).show();
     }
 
     // في Sales_mainFragment.java:
@@ -527,17 +585,57 @@ public class Sales_mainFragment extends Fragment {
         SQLiteDatabase db = null;
         try {
             db = dbHelper.getWritableDatabase();
+            // 1. إدراج السجل محلياً والحصول على المعرف الجديد
             ContentValues values = new ContentValues();
             values.put("total_amount", totalAmount);
             values.put("currency", currency);
-            db.insert("total_account_updates", null, values);
+            long newRowId = db.insert("total_account_updates", null, values);
+
+            if (newRowId != -1) {
+                // 2. قراءة الطابع الزمني الذي أنشأه SQLite
+                Cursor cursor = db.rawQuery(
+                        "SELECT total_timestamp FROM total_account_updates WHERE total_account_id = ?",
+                        new String[]{ String.valueOf(newRowId) }
+                );
+                String ts = null;
+                if (cursor.moveToFirst()) {
+                    ts = cursor.getString(0);
+                }
+                cursor.close();
+
+                if (ts != null) {
+                    // 3. تجهيز القيم للمزامنة
+                    ContentValues firebaseValues = new ContentValues();
+                    firebaseValues.put("total_amount", totalAmount);
+                    firebaseValues.put("currency", currency);
+                    firebaseValues.put("total_timestamp", ts);
+
+                    // 4. إضافة عملية INSERT معلقة لجدول total_account_updates
+                    DatabaseHelper.addPendingOperation(
+                            db,
+                            "INSERT",
+                            DatabaseHelper.TABLE_TOTAL_ACCOUNT_UPDATES,
+                            String.valueOf(newRowId),
+                            firebaseValues
+                    );
+
+                    // 5. محاولة المزامنة الفورية عند توفر الشبكة
+                    if (isNetworkConnected()) {
+                        DatabaseHelper.syncPendingOperations(getActivity());
+                    }
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getActivity(), "فشل في تسجيل تحديث الحساب الكلي: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),
+                    getString(R.string.failed_to_register_total_account_update) + e.getMessage(),
+                    Toast.LENGTH_LONG
+            ).show();
         } finally {
             if (db != null) db.close();
         }
     }
+
 
 
 

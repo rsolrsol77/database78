@@ -1,14 +1,17 @@
 package com.example.database78;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +30,20 @@ public class VerificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification);
+
+
+        // Set up toolbar with back (logout) button
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(""); // or set a title if desired
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+        }
+
+
 
         etVerificationCode = findViewById(R.id.etVerificationCode);
         btnVerify = findViewById(R.id.btnVerify);
@@ -49,6 +66,40 @@ public class VerificationActivity extends AppCompatActivity {
         // تحقق مباشرة عند فتح الشاشة لأول مرة
         checkEmailVerification();
     }
+
+
+
+
+    @Override
+    public void onBackPressed() {
+        // بدلاً من العودة إلى MainActivity غير المُفعّل
+        super.onBackPressed();
+        mAuth.signOut();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            // Logout and return to LoginActivity
+            mAuth.signOut();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     @Override
     protected void onResume() {
@@ -101,19 +152,33 @@ public class VerificationActivity extends AppCompatActivity {
         }.start();
     }
 
+
     private void checkEmailVerification() {
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            user.reload().addOnCompleteListener(task -> {
-                if (user.isEmailVerified()) {
-                    // تجاوز إدخال الكود إذا تم التحقق
-                    Toast.makeText(this, "تم التحقق بنجاح!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(this, MainActivity.class));
-                    finish();
-                }
-            });
+        if (user == null) {
+            Toast.makeText(this, "لا يوجد مستخدم مسجل!", Toast.LENGTH_SHORT).show();
+            return;
         }
+        // أعد تحميل حالة المستخدم من الخادم
+        user.reload().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (user.isEmailVerified()) {
+                    // تم التحقق، انتقل للـ MainActivity
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(this, "بريديك لم يتم التحقق منه بعد.", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this,
+                        "فشل في التحقق: " + task.getException().getMessage(),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
+
 
     @Override
     protected void onDestroy() {

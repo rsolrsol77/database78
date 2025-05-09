@@ -157,7 +157,7 @@ public class MainFragment extends Fragment {
             if (validateMainRecordFields()) {
                 insertRecord();
             } else {
-                Toast.makeText(getActivity(), "يرجى ملء جميع الحقول المطلوبة", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.please_fill_in_all_required_fields, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -165,7 +165,7 @@ public class MainFragment extends Fragment {
             if (validateSubRecordFields()) {
                 insertSubRecord();
             } else {
-                Toast.makeText(getActivity(), "يرجى ملء جميع الحقول المطلوبة", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.please_fill_in_all_required_fields, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -173,7 +173,8 @@ public class MainFragment extends Fragment {
 
             mainRecordLayout.setVisibility(View.VISIBLE);
             subRecordLayout.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), "إنشاء مستودع", Toast.LENGTH_SHORT).show();
+            updateButtonSize(btnMainRecord, btnSubRecord); // تحديث الحجم
+
         });
 
 
@@ -181,7 +182,8 @@ public class MainFragment extends Fragment {
 
             mainRecordLayout.setVisibility(View.GONE);
             subRecordLayout.setVisibility(View.VISIBLE);
-            Toast.makeText(getActivity(), "إضافة مادة إلى مستودع", Toast.LENGTH_SHORT).show();
+            updateButtonSize(btnSubRecord, btnMainRecord); // تحديث الحجم
+
         });
 
         // زر لاختيار السجل الرئيسي من الـ Dialog
@@ -195,6 +197,22 @@ public class MainFragment extends Fragment {
 
 
         return view;
+
+
+    }
+
+
+
+    private void updateButtonSize(LinearLayout selectedButton, LinearLayout otherButton) {
+        LinearLayout.LayoutParams selectedParams = (LinearLayout.LayoutParams) selectedButton.getLayoutParams();
+        LinearLayout.LayoutParams otherParams = (LinearLayout.LayoutParams) otherButton.getLayoutParams();
+
+        selectedParams.weight = 1.5f; // تكبير الزر المختار
+        otherParams.weight = 0.5f;    // تصغير الزر الآخر
+
+        selectedButton.setLayoutParams(selectedParams);
+        otherButton.setLayoutParams(otherParams);
+
 
 
     }
@@ -260,7 +278,7 @@ public class MainFragment extends Fragment {
         }
 
         if (selectedRecord == null) {
-            Toast.makeText(getActivity(), "الرجاء اختيار المستودع أولاً", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.please_select_the_warehouse_first, Toast.LENGTH_LONG).show();
             isValid = false;
         }
 
@@ -300,8 +318,9 @@ public class MainFragment extends Fragment {
             String[] parts = selectedRecordWithId.split(": ");
             selectedRecordId = Integer.parseInt(parts[0]); // تخزين الـ ID
             selectedRecord = parts[1]; // تخزين الاسم
-            selectedRecordTextView.setText("المستودع المحدد: " + selectedRecord + " (ID: " + selectedRecordId + ")");
-            Toast.makeText(getActivity(), "تم اختيار المستودع: " + selectedRecord, Toast.LENGTH_SHORT).show();
+            selectedRecordTextView.setText(
+                    getString(R.string.selected_warehouse, selectedRecord, selectedRecordId)
+            );            Toast.makeText(getActivity(), getString(R.string.the_warehouse_has_been_selected) + selectedRecord, Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
 
@@ -311,22 +330,62 @@ public class MainFragment extends Fragment {
 
 
 
+    // MainFragment.java
+
     private void logUpdate(String message) {
         SQLiteDatabase db = null;
         try {
             db = dbHelper.getWritableDatabase();
+
+            // 1. أدراج السجل محلياً والحصول على المعرف الجديد
             ContentValues values = new ContentValues();
             values.put("message", message);
-            db.insert("updates", null, values);
+            long newRowId = db.insert("updates", null, values);
+
+            if (newRowId != -1) {
+                // 2. قراءة الطابع الزمني الذي أنشأه SQLite
+                Cursor cursor = db.rawQuery(
+                        "SELECT timestamp FROM updates WHERE update_id = ?",
+                        new String[]{ String.valueOf(newRowId) }
+                );
+                String ts = null;
+                if (cursor.moveToFirst()) {
+                    ts = cursor.getString(0);
+                }
+                cursor.close();
+
+                if (ts != null) {
+                    // 3. تجهيز القيم للمزامنة
+                    ContentValues firebaseValues = new ContentValues();
+                    firebaseValues.put("message", message);
+                    firebaseValues.put("timestamp", ts);
+
+                    // 4. إضافة عملية INSERT معلقة لجدول updates
+                    DatabaseHelper.addPendingOperation(
+                            db,
+                            "INSERT",
+                            DatabaseHelper.TABLE_UPDATES,
+                            String.valueOf(newRowId),
+                            firebaseValues
+                    );
+
+                    // 5. محاولة المزامنة الفورية عند توفر الشبكة
+                    if (isNetworkConnected()) {
+                        DatabaseHelper.syncPendingOperations(getActivity());
+                    }
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getActivity(), "فشل في تسجيل التحديث: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),
+                    getString(R.string.failed_to_register_update) + e.getMessage(),
+                    Toast.LENGTH_LONG
+            ).show();
         } finally {
-            if (db != null) {
-                db.close();
-            }
+            if (db != null) db.close();
         }
     }
+
 
 
 
@@ -351,7 +410,7 @@ public class MainFragment extends Fragment {
 
             long newRowId = db.insert("records", null, values);
             if (newRowId != -1) {
-                Toast.makeText(getActivity(), "تم أنشاء المستودع بنجاح", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.the_warehouse_has_been_created, Toast.LENGTH_LONG).show();
                 recordsList.add(name); // تحديث قائمة السجلات
 
 
@@ -375,12 +434,12 @@ public class MainFragment extends Fragment {
 
 
                 // تسجيل التحديث
-                String message = "تم إنشاء مستودع جديد باسم " + name;
+                String message = getString(R.string.a_new_warehouse_has_been_created_named) + name;
                 logUpdate(message);
 
 
             } else {
-                Toast.makeText(getActivity(), "فشل في أنشاء المستودع", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),R.string.failed_to_create_repository, Toast.LENGTH_LONG).show();
             }
 
             edName.setText("");
@@ -388,7 +447,7 @@ public class MainFragment extends Fragment {
             edFee.setText("");
             edName.requestFocus();
         } catch (Exception ex) {
-            Toast.makeText(getActivity(), "فشل في أنشاء المستودع " + ex.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.failed_to_create_repository) + ex.getMessage(), Toast.LENGTH_LONG).show();
         } finally {
             if (db != null) db.close();
         }
@@ -403,7 +462,7 @@ public class MainFragment extends Fragment {
             String selectedUnit = spinnerUnit.getSelectedItem().toString();
 
             if (selectedRecordId == -1) {
-                Toast.makeText(getActivity(), "الرجاء اختيار المستودع أولاً", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),R.string.please_select_the_warehouse_first, Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -450,24 +509,29 @@ public class MainFragment extends Fragment {
                     ref.setValue(DatabaseHelper.valuesToMap(values)); // <-- استدعاء صحيح للدالة
                 }
 
-                Toast.makeText(getActivity(), "تم إضافة المادة الى المستودع بنجاح", Toast.LENGTH_LONG).show();
-
+                Toast.makeText(getActivity(), R.string.the_item_has_been_added_to_the_repository, Toast.LENGTH_LONG).show();
 
 
 
                 // تسجيل التحديث
-                String message = "تم إضافة مادة جديدة: " + material + " (الكمية: " + quantity + " " + selectedUnit + ") إلى السجل " + selectedRecord;
+                String message = getString(
+                        R.string.material_added_log,
+                        material,
+                        quantity,
+                        selectedUnit,
+                        selectedRecord
+                );
                 logUpdate(message);
 
             } else {
-                Toast.makeText(getActivity(), "فشل في إضافة المادة", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.failed_to_enter_the_material, Toast.LENGTH_LONG).show();
             }
 
             edMaterial.setText("");
             edQuantity.setText("");
             edMaterial.requestFocus();
         } catch (Exception ex) {
-            Toast.makeText(getActivity(), "فشل في إدخال المادة: " + ex.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.failed_to_enter_the_material + ex.getMessage(), Toast.LENGTH_LONG).show();
         } finally {
             if (db != null) db.close();
         }
@@ -500,7 +564,7 @@ public class MainFragment extends Fragment {
                 } while (c.moveToNext());
             }
         } catch (Exception ex) {
-            Toast.makeText(getActivity(), "فشل في تحميل المستودعات: " + ex.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.failed_to_load_repositories) + ex.getMessage(), Toast.LENGTH_LONG).show();
         } finally {
             if (c != null) c.close();
             if (db != null) db.close();

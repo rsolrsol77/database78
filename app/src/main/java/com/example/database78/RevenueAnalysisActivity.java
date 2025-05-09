@@ -53,7 +53,7 @@ public class RevenueAnalysisActivity extends AppCompatActivity {
         // تمكين زر الرجوع
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("احصائيات الواردات المالية");
+            getSupportActionBar().setTitle(R.string.financial_revenue_analysis);
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -173,11 +173,11 @@ public class RevenueAnalysisActivity extends AppCompatActivity {
             index++;
         }
 
-        LineDataSet currentDataSet = new LineDataSet(currentEntries, "الفترة الحالية");
+        LineDataSet currentDataSet = new LineDataSet(currentEntries, getString(R.string.current_filtering));
         currentDataSet.setColor(getResources().getColor(R.color.colorPrimary));
         currentDataSet.setCircleColor(getResources().getColor(R.color.colorPrimaryDark));
 
-        LineDataSet previousDataSet = new LineDataSet(previousEntries, "الفترة السابقة");
+        LineDataSet previousDataSet = new LineDataSet(previousEntries, "Previous filtering");
         previousDataSet.setColor(getResources().getColor(android.R.color.holo_red_dark));
         previousDataSet.setCircleColor(getResources().getColor(android.R.color.holo_red_dark));
 

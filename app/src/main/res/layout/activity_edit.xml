@@ -73,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/m1"
                 android:padding="8dp"
+                android:maxLength="20"
                 android:textAlignment="center" />
         </LinearLayout>
 
@@ -96,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/m1"
                 android:padding="8dp"
+                android:maxLength="25"
                 android:textAlignment="center" />
         </LinearLayout>
 
@@ -119,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/m1"
                 android:padding="8dp"
+                android:maxLength="30"
                 android:textAlignment="center" />
 
         </LinearLayout>

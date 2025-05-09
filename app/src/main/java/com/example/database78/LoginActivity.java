@@ -1,9 +1,12 @@
 package com.example.database78;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     TextInputEditText etLoginEmail, etLoginPassword;
     TextView tvRegisterHere;
     Button btnLogin, btnGoogleSignIn;
+    private ProgressBar progressBar;
+
 
     FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
@@ -37,11 +42,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.login));
+        }
+
+
         etLoginEmail = findViewById(R.id.etLoginEmail);
         etLoginPassword = findViewById(R.id.etLoginPass);
         tvRegisterHere = findViewById(R.id.tvRegisterHere);
         btnLogin = findViewById(R.id.btnLogin);
         btnGoogleSignIn = findViewById(R.id.btn_google_signin);
+        progressBar = findViewById(R.id.progressBar); // Loader
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -57,7 +69,19 @@ public class LoginActivity extends AppCompatActivity {
         btnGoogleSignIn.setOnClickListener(v -> signInWithGoogle());
     }
 
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);      // ينقل التطبيق إلى الخلفية
+    }
+
+
+
+
     private void signInWithGoogle() {
+        progressBar.setVisibility(View.VISIBLE);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -72,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(this, "فشل التسجيل: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
@@ -81,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
+                    progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
                         navigateToMainActivity();
                     } else {
@@ -100,16 +126,35 @@ public class LoginActivity extends AppCompatActivity {
             etLoginPassword.setError("يجب إدخال كلمة المرور");
             etLoginPassword.requestFocus();
         } else {
+            progressBar.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
                     FirebaseUser user = mAuth.getCurrentUser();
                     if (user != null && user.isEmailVerified()) {
                         Toast.makeText(LoginActivity.this, "تم تسجيل الدخول بنجاح", Toast.LENGTH_SHORT).show();
                         navigateToMainActivity();
                     } else {
-                        Toast.makeText(LoginActivity.this, "يرجى التحقق من بريدك الإلكتروني أولاً", Toast.LENGTH_SHORT).show();
-                        mAuth.signOut();
+                        // البريد غير موثق -> نرسل رسالة التحقق ونذهب إلى VerificationActivity
+                        user.sendEmailVerification()
+                                .addOnCompleteListener(verifyTask -> {
+                                    if (verifyTask.isSuccessful()) {
+                                        Toast.makeText(LoginActivity.this,
+                                                "تم إرسال رسالة التحقق إلى بريدك الإلكتروني", Toast.LENGTH_LONG).show();
+                                        // تسجيل خروج مؤقت قبل الانتقال
+                                        Intent intent = new Intent(LoginActivity.this, VerificationActivity.class);
+                                        // مسح سجل الأنشطة حتى لا نعود للّوجين
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(LoginActivity.this,
+                                                "فشل إرسال رسالة التحقق: " + verifyTask.getException().getMessage(),
+                                                Toast.LENGTH_LONG).show();
+                                    }
+                                });
                     }
+
                 } else {
                     Toast.makeText(LoginActivity.this, "خطأ في تسجيل الدخول: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }

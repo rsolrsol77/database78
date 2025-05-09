@@ -18,40 +18,191 @@
         android:elevation="4dp" />
 
 
-    <Spinner
-        android:id="@+id/spinnerPeriod"
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/periods_array"/>
+        android:orientation="horizontal"
+        android:background="#FFE0F3FF"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
 
-    <Spinner
-        android:id="@+id/spinnerCurrency"
+
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/currency_array"/>
+        app:cardBackgroundColor="#FFE0F3FF"
+        app:cardCornerRadius="8dp">
 
-    <CheckBox
-        android:id="@+id/cbCompareYoY"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="مقارنة مع العام السابق (YoY)"/>
 
-    <CheckBox
-        android:id="@+id/cbCompareMoM"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="مقارنة مع الشهر السابق (MoM)"/>
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/specify_the_period"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"
+                android:layout_gravity="center"/>
+
+        <Spinner
+            android:id="@+id/spinnerPeriod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/periods_array"/>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_currency"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"
+                android:layout_gravity="center"/>
+
+        <Spinner
+            android:id="@+id/spinnerCurrency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/currency_array"/>
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+
+
+
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFE0F3FF"
+        android:gravity="center"
+        android:layout_marginTop="3dp">
+
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            app:cardBackgroundColor="#FFE0F3FF"
+            app:cardCornerRadius="8dp">
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+
+                    <CheckBox
+                        android:id="@+id/cbCompareYoY"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/compared_to_the_previous_year"/>
+
+
+
+
+
+                    <CheckBox
+                        android:id="@+id/cbCompareMoM"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/compared_to_the_previous_month"/>
+
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/chartCard"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tool_bar">
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
 
     <TextView
         android:id="@+id/tvRevenueSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:padding="8dp"/>
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:layout_marginTop="10dp"/>
+
+    </LinearLayout>
+
+
+
 
 </LinearLayout>

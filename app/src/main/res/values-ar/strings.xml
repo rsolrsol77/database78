@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Database78</string>
+    <string name="app_name">Bistox</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="name_warehouse">أسم المستودع :</string>
-    <string name="warehouse_location">موقع المستودع :</string>
-    <string name="warehouse_information">معلومات عن المستودع :</string>
+    <string name="name_warehouse">أسم المستودع</string>
+    <string name="warehouse_location">موقع المستودع</string>
+    <string name="warehouse_information">معلومات عن المستودع</string>
     <string name="created">أنشاء</string>
     <string name="select_main_record">أضغط لأختيار المستودع</string>
-    <string name="material">أسم المادة :</string>
-    <string name="quantity">الكمية :</string>
+    <string name="material">أسم المادة</string>
+    <string name="quantity">الكمية</string>
     <string name="add_sub_record">أدخال</string>
     <string name="create_a_warehouse">أنشاء مستودع</string>
     <string name="enter_materials">أدخال المواد</string>
     <string name="enter_name">ادخل الاسم</string>
     <string name="enter_quantity">ادخل العدد</string>
-    <string name="buyer_name">أسم المشتري :</string>
-    <string name="phone">رقم الهاتف :</string>
-    <string name="address">عنوان المشتري :</string>
-    <string name="purchase_date">تاريخ الشراء :</string>
-    <string name="final_amount">المبلغ النهائي :</string>
-    <string name="order_information">معلومات عن الطلب :</string>
-    <string name="order_status">حالة الطلب :</string>
+    <string name="buyer_name">أسم المشتري</string>
+    <string name="phone">رقم الهاتف</string>
+    <string name="address">عنوان المشتري</string>
+    <string name="purchase_date">تاريخ الشراء</string>
+    <string name="final_amount">المبلغ النهائي</string>
+    <string name="order_information">معلومات عن الطلب</string>
+    <string name="order_status">حالة الطلب</string>
     <string name="enter_phone">أدخل رقم الهاتف</string>
     <string name="enter_address">أدخل العنوان</string>
     <string name="enter_date">أدخل التاريخ yyyy-MM-dd</string>
@@ -41,4 +41,153 @@
     <string name="items_sold">المواد التي تم بيعها</string>
     <string name="warehouses">المستودعات</string>
     <string name="sales">المبيعات</string>
+    <string name="menu_change_language">اختيار اللغة</string>
+    <string name="select_language">اختر لغة التطبيق</string>
+
+
+
+
+
+
+    <string name="selected_warehouse">المستودع المحدد: %1$s (ID: %2$d)</string>
+    <string name="material_added_log">تم إضافة مادة جديدة: %1$s (الكمية: %2$s %3$s) إلى المستودع %4$s</string>
+    <string name="header_id">id</string>
+    <string name="header_material">المادة</string>
+    <string name="header_quantity">الكمية</string>
+    <string name="header_unit">الوحدة</string>
+    <string name="sold_items_header">تم بيع المواد التالية:</string>
+    <string name="quantity_label">الكمية: %1$s %2$s</string>
+    <string name="item_separator">، </string>
+
+    <string name="sold_quantity">الكمية المباعة: %1$d %2$s</string>
+    <string name="rank">#%d</string>
+
+
+
+
+
+
+
+
+
+    <string-array name="units_array">
+        <item>عدد</item>
+        <item>غرام</item>
+        <item>كغم</item>
+        <item>طن</item>
+        <item>سم</item>
+        <item>لتر</item>
+        <item>متر</item>
+        <item>مليمتر</item>
+        <item>كيلومتر</item>
+    </string-array>
+
+
+
+
+    <string-array name="currency_array">
+        <!-- عملات عربية -->
+        <item>دينار عراقي (IQD)</item>
+        <item>ريال سعودي (SAR)</item>
+        <item>درهم إماراتي (AED)</item>
+        <item>دينار بحريني (BHD)</item>
+        <item>دينار كويتي (KWD)</item>
+        <item>ريال قطري (QAR)</item>
+        <item>جنيه مصري (EGP)</item>
+        <item>ليرة لبنانية (LBP)</item>
+        <item>ريال إيراني (IRR)</item>
+
+        <!-- عملات عالمية -->
+        <item>دولار أمريكي (USD)</item>
+        <item>يورو (EUR)</item>
+        <item>جنيه إسترليني (GBP)</item>
+        <item>ين ياباني (JPY)</item>
+        <item>يوان صيني (CNY)</item>
+        <item>روبية هندية (INR)</item>
+        <item>دولار كندي (CAD)</item>
+        <item>فرنك سويسري (CHF)</item>
+    </string-array>
+
+
+
+
+    <string-array name="periods_array">
+        <item>يومي</item>
+        <item>أسبوعي</item>
+        <item>شهري</item>
+        <item>سنوي</item>
+    </string-array>
+
+
+
+    <string name="selected_warehousr_not_selected">المستودع المحدد: لم يتم الاختيار</string>
+    <string name="please_select_the_warehouse_first">الرجاء اختيار المستودع أولاً</string>
+    <string name="please_fill_in_all_required_fields">يرجى ملء جميع الحقول المطلوبة</string>
+    <string name="the_warehouse_has_been_selected">تم اختيار المستودع:</string>
+    <string name="the_warehouse_has_been_created">تم أنشاء المستودع بنجاح</string>
+    <string name="a_new_warehouse_has_been_created_named">"تم إنشاء مستودع جديد باسم "</string>
+    <string name="failed_to_create_repository">"فشل في أنشاء المستودع "</string>
+    <string name="the_item_has_been_added_to_the_repository">تم إضافة المادة الى المستودع بنجاح</string>
+    <string name="failed_to_save_sales">فشل في حفظ المبيعات</string>
+    <string name="financial_import_filtering">فلترة الواردات المالية</string>
+    <string name="product_analysis">تحليل المنتجات</string>
+    <string name="finance">المالية</string>
+    <string name="home">الرئيسية</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="new_material_added">"تم إضافة مادة جديدة: "</string>
+    <string name="failed_to_enter_the_material">فشل في إضافة المادة</string>
+    <string name="failed_to_load_repositories">"فشل في تحميل المستودعات: "</string>
+    <string name="failed_to_register_update">"فشل في تسجيل التحديث: "</string>
+    <string name="materials_saved_successfully">تم حفظ المواد بنجاح</string>
+    <string name="failed_to_register_total_account_update">"فشل في تسجيل تحديث الحساب الكلي: "</string>
+    <string name="the_master_record_was_deleted_successfully">تم حذف السجل الرئيسي بنجاح</string>
+    <string name="failed_to_delete_master_record">فشل في حذف السجل الرئيسي</string>
+    <string name="the_sup_record_was_deleted_successfully">تم حذف السجل الفرعي بنجاح</string>
+    <string name="failed_to_delete_sub_record">فشل في حذف السجل الفرعي</string>
+    <string name="please_fill_in_all_fields_in_the_sub_record">الرجاء ملء جميع الحقول في السجلات الفرعية</string>
+    <string name="the_quantity_in_the_sub_register_must_be_a_valid_number">الكمية في السجل الفرعي يجب أن تكون رقمًا صالحًا</string>
+    <string name="the_record_was_updated_successfully">تم تحديث السجل بنجاح</string>
+    <string name="choose_materials">اختر المادة</string>
+    <string name="warehouse">المستودع:</string>
+    <string name="cancellation">إلغاء</string>
+    <string name="quantities_in_warehouses_are_not_updated_when_modified_please_update_them_manually">لا يتم تحديث الكميات في المخازن عند التعديل عليها يرجى تحديثها يدويا.</string>
+    <string name="understood">فهمت</string>
+    <string name="do_not_show_again">عدم العرض مرة أخرى</string>
+    <string name="financial_imports">الواردات المالية</string>
+    <string name="financial_income_of">"وارد مالي قدره: "</string>
+    <string name="first_date">التاريخ الأول</string>
+    <string name="last_date">التاريخ الأخير</string>
+    <string name="total_imports">مجموع الواردات الكلي :</string>
+    <string name="filter">فلترة</string>
+    <string name="all_units">كل الوحدات</string>
+    <string name="quantity_sold">الكمية المباعة</string>
+    <string name="financial_revenue_analysis">تحليل الواردات المالية</string>
+    <string name="current_filtering">الفترة الحالية</string>
+    <string name="previous_filtering">الفترة السابقة</string>
+    <string name="specify_the_period">حدد الفترة</string>
+    <string name="select_currency">حدد العملة</string>
+    <string name="compared_to_the_previous_year">"مقارنة مع العام السابق "</string>
+    <string name="compared_to_the_previous_month">"مقارنة مع الشهر السابق "</string>
+    <string name="analytics">التحليلات</string>
+    <string name="log_out">تسجيل الخروج</string>
+    <string name="display_data">عرض البيانات</string>
+    <string name="sales_list">قائمة المبيعات</string>
+    <string name="update_log">سجل التحديثات</string>
+    <string name="write_the_approximate_location_of_the_warehouse">اكتب الموقع التقريبي للمستودع</string>
+    <string name="write_any_notes_about_the_warehouse">اكتب اي ملاحضات عن المستودع</string>
+    <string name="show_details">عرض التفاصيل</string>
+    <string name="register">إنشاء حساب</string>
+    <string name="password">كلمة المرور</string>
+    <string name="create_a_new_account">إنشاء حساب جديد</string>
+    <string name="log_in">تسجيل الدخول</string>
+    <string name="sing_in_with_google">تسجيل الدخول باستخدام Google</string>
+    <string name="registration">التسجيل</string>
+    <string name="already_have_an_account">لديك حساب بالفعل؟</string>
+    <string name="we_have_sent_you_a_verification_message_via_email_you_can_complete_the_verification_by_opening_the_link_in_the_email_or_entering_the_verification_code_below">لقد أرسلنا إليك رسالة تحقق عبر البريد الإلكتروني. يمكنك إتمام التحقق من خلال فتح الرابط في البريد أو إدخال رمز التحقق أدناه.</string>
+    <string name="enter_verification_code_optional">أدخل رمز التحقق (اختياري)</string>
+    <string name="verification">تحقق</string>
+    <string name="resend_mail">إعادة إرسال البريد</string>
+    <string name="if_you_open_the_link_in_your_email_verification_will_be_completed_automatically_when_you_return_to_the_app">إذا فتحت الرابط في بريدك الإلكتروني، سيتم التحقق تلقائيًا عند عودتك إلى التطبيق.</string>
+
+
 </resources>

@@ -1,17 +1,25 @@
 <resources>
-    <string name="app_name">Database78</string>
+    <string name="app_name">Bistox</string>
+
 
     <string-array name="units_array">
-        <item>غرام</item>
-        <item>كغم</item>
-        <item>طن</item>
-        <item>عدد</item>
+        <item>Piece</item>
+        <item>Gram</item>
+        <item>Kilogram</item>
+        <item>Tonne</item>
+        <item>Centimeter</item>
+        <item>Liter</item>
+        <item>Meter</item>
+        <item>Millimeter</item>
+        <item>Kilometer</item>
     </string-array>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="name_warehouse">Name Warehouse :</string>
-    <string name="warehouse_location">Warehouse location :</string>
-    <string name="warehouse_information">warehouse information :</string>
+    <string name="name_warehouse">Name Warehouse</string>
+    <string name="warehouse_location">Warehouse location</string>
+    <string name="warehouse_information">warehouse information</string>
     <string name="created">Created</string>
     <string name="select_main_record">Select Main Record</string>
     <string name="material">Material</string>
@@ -21,13 +29,13 @@
     <string name="enter_materials">Enter materials</string>
     <string name="enter_name">Enter name</string>
     <string name="enter_quantity">Enter quantity</string>
-    <string name="buyer_name">Buyer name :</string>
-    <string name="phone">Phone :</string>
-    <string name="address">Address :</string>
-    <string name="purchase_date">Purchase date :</string>
-    <string name="final_amount">Final Amount :</string>
-    <string name="order_information">Order information :</string>
-    <string name="order_status">Order Status :</string>
+    <string name="buyer_name">Buyer name</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+    <string name="purchase_date">Purchase date</string>
+    <string name="final_amount">Final Amount</string>
+    <string name="order_information">Order information</string>
+    <string name="order_status">Order Status</string>
     <string name="enter_phone">enter phone</string>
     <string name="enter_address">enter address</string>
     <string name="enter_date">enter date yyyy-MM-dd</string>
@@ -37,18 +45,14 @@
     <string name="double_click_to_select_a_subject">Double click to select a subject</string>
     <string name="unity">Unity</string>
     <string name="quantityy">Quantityy</string>
-    <string name="id">ID</string>
-    <string name="items">items</string>
+    <string name="id">ID :</string>
+    <string name="items">items :</string>
     <string name="stocked_materials">stocked materials:</string>
     <string name="enter_data_to_create_warehouse">enter data to create warehouse</string>
     <string name="add_material_to_warehouse">add material to warehouse</string>
     <string name="edit">edit</string>
-
-
-    <string-array name="currency_array">
-        <item>الدولار</item>
-        <item>الدينار العراقي</item>
-    </string-array>
+    <string name="menu_change_language">Change Language</string>
+    <string name="select_language">Select Language</string>
     <string name="delete">delete</string>
     <string name="warehouse_contents">Warehouse Contents</string>
     <string name="items_sold">Items sold</string>
@@ -56,19 +60,143 @@
     <string name="sales">Sales</string>
 
 
+
+
+
+    <string name="selected_warehouse">Selected Warehouse: %1$s (ID: %2$d)</string>
+    <string name="material_added_log">New material added: %1$s (Quantity: %2$s %3$s) to warehouse: %4$s</string>
+    <string name="header_id">ID</string>
+    <string name="header_material">Material</string>
+    <string name="header_quantity">Quantity</string>
+    <string name="header_unit">Unit</string>
+    <string name="sold_items_header">Sold items:</string>
+    <string name="quantity_label">Quantity: %1$s %2$s</string>
+    <string name="item_separator">, </string>
+
+    <string name="sold_quantity">Sold Quantity: %1$d %2$s</string>
+    <string name="rank">#%d</string>
+
+
+
+
+
+
+
+
+    <string-array name="currency_array">
+        <!-- Arabic Currencies -->
+        <item>Iraqi Dinar (IQD)</item>
+        <item>Saudi Riyal (SAR)</item>
+        <item>UAE Dirham (AED)</item>
+        <item>Bahraini Dinar (BHD)</item>
+        <item>Kuwaiti Dinar (KWD)</item>
+        <item>Qatari Riyal (QAR)</item>
+        <item>Egyptian Pound (EGP)</item>
+        <item>Lebanese Pound (LBP)</item>
+        <item>Iranian Rial (IRR)</item>
+
+        <!-- Global Currencies -->
+        <item>US Dollar (USD)</item>
+        <item>Euro (EUR)</item>
+        <item>British Pound (GBP)</item>
+        <item>Japanese Yen (JPY)</item>
+        <item>Chinese Yuan (CNY)</item>
+        <item>Indian Rupee (INR)</item>
+        <item>Canadian Dollar (CAD)</item>
+        <item>Swiss Franc (CHF)</item>
+    </string-array>
+
+
+
     <string name="default_web_client_id">17105608183-ngl6mhpsu38a4etu3o75hcqfhr32rg9e.apps.googleusercontent.com</string>
 
 
     <string name="open_drawer" translatable="false">فتح القائمة</string>
     <string name="close_drawer" translatable="false">إغلاق القائمة</string>
+    <string name="selected_warehousr_not_selected">Selected Warehousr : Not selected</string>
+    <string name="please_select_the_warehouse_first">Please select the warehouse first</string>
+    <string name="please_fill_in_all_required_fields">Please fill in all required fields</string>
+    <string name="the_warehouse_has_been_selected">"The warehouse has been selected : "</string>
+    <string name="the_warehouse_has_been_created">The warehouse has been created</string>
+    <string name="a_new_warehouse_has_been_created_named">"A new warehouse has been created named "</string>
+    <string name="failed_to_create_repository">"Failed to create repository "</string>
+    <string name="the_item_has_been_added_to_the_repository">The item has been added to the repository</string>
+    <string name="failed_to_enter_the_material">Failed to enter the material</string>
+    <string name="failed_to_load_repositories">"Failed to load repositories: "</string>
+    <string name="failed_to_register_update">"Failed to register update: "</string>
+    <string name="failed_to_save_sales">Failed to save sales</string>
+    <string name="materials_saved_successfully">Materials saved successfully</string>
+    <string name="failed_to_register_total_account_update">"Failed to register total account update: "</string>
+    <string name="the_master_record_was_deleted_successfully">The master record was deleted successfully</string>
+    <string name="failed_to_delete_master_record">Failed to delete master record</string>
+    <string name="the_sup_record_was_deleted_successfully">The sup-record was deleted successfully</string>
+    <string name="failed_to_delete_sub_record">Failed to delete sub-record</string>
+    <string name="please_fill_in_all_fields_in_the_sub_record">Please fill in all fields in the sub-record</string>
+    <string name="the_quantity_in_the_sub_register_must_be_a_valid_number">The quantity in the sub-register must be a valid number</string>
+    <string name="the_record_was_updated_successfully">The record was updated successfully</string>
+    <string name="quantities_in_warehouses_are_not_updated_when_modified_please_update_them_manually">Quantities in warehouses are not updated when modified please update them manually</string>
+    <string name="understood">Understood</string>
+    <string name="do_not_show_again">Do not show again</string>
+    <string name="financial_imports">Financial imports</string>
+    <string name="financial_income_of">Financial income of :</string>
+    <string name="financial_import_filtering">Financial import filtering</string>
+    <string name="first_date">First date</string>
+    <string name="last_date">Last date</string>
+    <string name="total_imports">Total imports :</string>
+    <string name="filter">Filter</string>
+    <string name="product_analysis">Product analysis</string>
+    <string name="all_units">All units</string>
+    <string name="quantity_sold">Quantity sold</string>
+    <string name="financial_revenue_analysis">Financial revenue analysis</string>
+    <string name="current_filtering">Current filtering</string>
+    <string name="specify_the_period">Specify the period</string>
+    <string name="select_currency">Select currency</string>
+    <string name="compared_to_the_previous_year">Compared to the previous year</string>
+    <string name="compared_to_the_previous_month">Compared to the previous month</string>
+    <string name="finance">Finance</string>
+    <string name="analytics">Analytics</string>
+    <string name="log_out">Log out</string>
+    <string name="home">Home</string>
+    <string name="display_data">Display data</string>
+    <string name="sales_list">Sales list</string>
+    <string name="update_log">Update log</string>
+    <string name="write_the_approximate_location_of_the_warehouse">Write the approximate location of the warehouse</string>
+    <string name="write_any_notes_about_the_warehouse">Write any notes about the warehouse</string>
+    <string name="show_details">Show details</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="create_a_new_account">Create a new account</string>
+    <string name="log_in">Log in</string>
+    <string name="sing_in_with_google">Sing in with Google</string>
+    <string name="registration">Registration</string>
+    <string name="already_have_an_account">Already have an account ?</string>
+    <string name="we_have_sent_you_a_verification_message_via_email_you_can_complete_the_verification_by_opening_the_link_in_the_email_or_entering_the_verification_code_below">We have sent you a verification message via email. You can complete the verification by opening the link in the email or entering the verification code below.</string>
+    <string name="enter_verification_code_optional">Enter verification code (optional)</string>
+    <string name="verification">Verification</string>
+    <string name="resend_mail">Resend mail</string>
+    <string name="if_you_open_the_link_in_your_email_verification_will_be_completed_automatically_when_you_return_to_the_app">If you open the link in your email, verification will be completed automatically when you return to the app.</string>
 
 
     <string-array name="periods_array">
-        <item>يومي</item>
-        <item>أسبوعي</item>
-        <item>شهري</item>
-        <item>سنوي</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Annual</item>
     </string-array>
+
+
+
+
+        <string-array name="language_names">
+            <item>العربية</item>
+            <item>English</item>
+        </string-array>
+        <string-array name="language_codes">
+            <item>ar</item>
+            <item>en</item>
+        </string-array>
+
 
 
 </resources>

@@ -5,8 +5,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -16,12 +20,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 public class TotalAccountUpdatesActivity extends AppCompatActivity {
 
-    DatabaseHelper dbHelper;
-    ListView totalAccountUpdatesListView;
+    private DatabaseHelper dbHelper;
+    private ListView totalAccountUpdatesListView;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -30,53 +33,58 @@ public class TotalAccountUpdatesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_total_account_updates);
 
         dbHelper = new DatabaseHelper(this);
+        setupToolbar();
+        initializeListView();
+    }
 
-        // إعداد Toolbar
+    private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-
-        // تمكين زر الرجوع
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("الواردات المالية");
+            getSupportActionBar().setTitle(R.string.financial_imports);
         }
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
+    }
 
-
+    private void initializeListView() {
         totalAccountUpdatesListView = findViewById(R.id.total_account_updates_list_view);
-
-        List<String> totalAccountUpdates = getTotalAccountUpdates();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, totalAccountUpdates);
+        List<TotalAccountItem> items = fetchTotalAccountUpdates();
+        TotalAccountAdapter adapter = new TotalAccountAdapter(items);
         totalAccountUpdatesListView.setAdapter(adapter);
     }
 
-    public List<String> getTotalAccountUpdates() {
-        List<String> updates = new ArrayList<>();
+    private List<TotalAccountItem> fetchTotalAccountUpdates() {
+        List<TotalAccountItem> items = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT total_amount, currency, total_timestamp FROM total_account_updates ORDER BY total_timestamp DESC", null);
+        Cursor cursor = db.rawQuery(
+                "SELECT total_amount, currency, total_timestamp FROM total_account_updates ORDER BY total_timestamp DESC",
+                null
+        );
+
         if (cursor.moveToFirst()) {
             do {
-                String totalAmount = cursor.getString(0);
+                String amount = cursor.getString(0);
                 String currency = cursor.getString(1);
-                String timestamp = cursor.getString(2);
-
-                String formattedTimestamp = formatTimestamp(timestamp);
-                String message = "وارد مالي قدره " + totalAmount + " " + currency + "\nفي التاريخ " + formattedTimestamp;
-                updates.add(message);
+                String timestamp = formatTimestamp(cursor.getString(2));
+                items.add(new TotalAccountItem(amount, currency, timestamp));
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return updates;
+        return items;
     }
 
     private String formatTimestamp(String timestamp) {
+        if (timestamp == null || timestamp.isEmpty()) {
+            return "Unknown Date";
+        }
+
+        // نقرأ النص مباشرة كـ "yyyy-MM-dd HH:mm:ss" دون تعيين منطقة زمنية
         SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        dbFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        SimpleDateFormat displayFormat = new SimpleDateFormat("dd MMM yyyy, HH:mm:ss", Locale.getDefault());
-        displayFormat.setTimeZone(TimeZone.getDefault());
+        // نعرض بنفس التنسيق أيضاً
+        SimpleDateFormat displayFormat = new SimpleDateFormat("dd MMM yyyy, HH:mm", Locale.getDefault());
 
         try {
             Date date = dbFormat.parse(timestamp);
@@ -90,9 +98,43 @@ public class TotalAccountUpdatesActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        // معالجة الضغط على زر الرجوع
-        finish(); // العودة إلى النشاط السابق
+        finish();
         return true;
     }
 
+    // Custom Adapter Class
+    private class TotalAccountAdapter extends ArrayAdapter<TotalAccountItem> {
+
+        TotalAccountAdapter(List<TotalAccountItem> items) {
+            super(TotalAccountUpdatesActivity.this, R.layout.list_item_total_account, items);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            TotalAccountItem item = getItem(position);
+
+            if (convertView == null) {
+                convertView = getLayoutInflater().inflate(R.layout.list_item_total_account, parent, false);
+                holder = new ViewHolder();
+                holder.amountTextView = convertView.findViewById(R.id.tv_amount);
+                holder.currencyTextView = convertView.findViewById(R.id.tv_currency);
+                holder.timestampTextView = convertView.findViewById(R.id.tv_timestamp);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            holder.amountTextView.setText(String.format("%s %s", item.getTotalAmount(), item.getCurrency()));
+            holder.timestampTextView.setText(item.getTimestamp());
+
+            return convertView;
+        }
+
+        private class ViewHolder {
+            TextView amountTextView;
+            TextView currencyTextView;
+            TextView timestampTextView;
+        }
+    }
 }

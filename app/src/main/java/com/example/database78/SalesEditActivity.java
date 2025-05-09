@@ -212,9 +212,9 @@ public class SalesEditActivity extends AppCompatActivity {
         }
 
         if (rowsAffected > 0) {
-            Toast.makeText(this, "تم حذف السجل الفرعي بنجاح", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,  R.string.the_sup_record_was_deleted_successfully, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "فشل في حذف السجل الفرعي", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.failed_to_delete_sub_record, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -231,7 +231,7 @@ public class SalesEditActivity extends AppCompatActivity {
     private void updateSalesRecord() {
         // التحقق من الحقول المطلوبة
         if (!areRequiredFieldsFilled()) {
-            Toast.makeText(this, "الرجاء ملء جميع الحقول المطلوبة قبل التحديث", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,  R.string.please_fill_in_all_required_fields, Toast.LENGTH_SHORT).show();
             return; // إيقاف عملية التحديث
         }
 
@@ -321,7 +321,7 @@ public class SalesEditActivity extends AppCompatActivity {
 
 
 
-            Toast.makeText(this, "Record Updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,  R.string.the_record_was_updated_successfully, Toast.LENGTH_SHORT).show();
 
             // عرض الرسالة المنبثقة للتذكير فقط إذا تغيرت الكمية
             if (quantityChanged) {
@@ -368,13 +368,13 @@ public class SalesEditActivity extends AppCompatActivity {
 
         if (!dontShowAgain) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("لا يتم تحديث الكميات في المخازن عند التعديل عليها يرجى تحديثها يدويا.")
+            builder.setMessage(R.string.quantities_in_warehouses_are_not_updated_when_modified_please_update_them_manually)
                     .setCancelable(false)
-                    .setPositiveButton("فهمت", (dialog, id) -> {
+                    .setPositiveButton(R.string.understood, (dialog, id) -> {
                         dialog.dismiss();
                         finish(); // إنهاء النشاط بعد الضغط على "فهمت"
                     })
-                    .setNegativeButton("عدم العرض مرة أخرى", (dialog, id) -> {
+                    .setNegativeButton(R.string.do_not_show_again, (dialog, id) -> {
                         // حفظ حالة "عدم العرض مرة أخرى"
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.putBoolean("dont_show_again", true);
@@ -439,7 +439,7 @@ public class SalesEditActivity extends AppCompatActivity {
             DatabaseHelper.syncPendingOperations(this);
         }
 
-        Toast.makeText(this, "Record Deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.the_master_record_was_deleted_successfully, Toast.LENGTH_SHORT).show();
         finish();
     }
 

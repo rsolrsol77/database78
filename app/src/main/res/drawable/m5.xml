@@ -1,0 +1,13 @@
+<!-- res/drawable/circular_button.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#41B546"/>
+    <corners android:radius="50dp"/>
+    <padding android:left="10dp" android:top="10dp" android:right="10dp" android:bottom="10dp"/>
+
+
+    <stroke android:color="#41B546"
+        android:width="8dp"/>
+
+    <corners android:radius="8dp"/>
+
+</shape>

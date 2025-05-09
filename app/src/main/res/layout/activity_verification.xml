@@ -5,37 +5,81 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
+    android:background="#FFFFFF"
     tools:context=".VerificationActivity">
 
-    <TextView
+
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="لقد أرسلنا إليك رسالة تحقق عبر البريد الإلكتروني. يمكنك إتمام التحقق من خلال فتح الرابط في البريد أو إدخال رمز التحقق أدناه."
-        android:textSize="18sp"
-        android:textColor="#000"
-        android:gravity="center"
-        android:padding="16dp"/>
+        android:background="#FFFFFF"
+        app:titleTextColor="@android:color/black"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+
+    <!-- محتوى رئيسي مع Padding -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+
+
+    <!-- Instruction Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="8dp"
+        android:layout_marginBottom="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/we_have_sent_you_a_verification_message_via_email_you_can_complete_the_verification_by_opening_the_link_in_the_email_or_entering_the_verification_code_below"
+            android:textSize="16sp"
+            android:lineSpacingMultiplier="1.2"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:padding="16dp" />
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusBottomEnd="8dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etVerificationCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="أدخل رمز التحقق (اختياري)"
-            android:inputType="number"/>
+            android:hint="@string/enter_verification_code_optional"
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnVerify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="تحقق"/>
+        android:text="@string/verification"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:background="@drawable/r4"
+        android:layout_marginTop="30dp"
+        app:cornerRadius="8dp"
+        app:iconGravity="textStart" />
 
 
     <!-- تحت العناصر الحالية -->
@@ -45,27 +89,35 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnResendCode"
         android:textColor="#000"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnResendCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="إعادة إرسال الرمز"
-        android:enabled="false"/>
+        android:text="@string/resend_mail"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:background="@drawable/r4"
+        android:layout_marginTop="10dp"
+        app:cornerRadius="8dp"
+        android:enabled="false"
+        app:iconGravity="textStart" />
 
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="إذا فتحت الرابط في بريدك الإلكتروني، سيتم التحقق تلقائيًا عند عودتك إلى التطبيق."
-        android:textSize="14sp"
-        android:textColor="#555"
+        android:text="@string/if_you_open_the_link_in_your_email_verification_will_be_completed_automatically_when_you_return_to_the_app"
+        android:textSize="12sp"
+        android:textColor="#000000"
+        android:textStyle="bold"
         android:gravity="center"
-        android:padding="8dp"/>
+        android:layout_marginTop="15dp"/>
 
 
-
+    </LinearLayout>
 
 </LinearLayout>

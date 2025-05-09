@@ -55,10 +55,19 @@
     <!-- القائمة الجانبية -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
         app:headerLayout="@layout/nav_header"
         android:layout_gravity="start"
-        app:menu="@menu/drawer_menu" />
+        app:menu="@menu/drawer_menu"
+        app:itemTextAppearance="@style/TextAppearance.Material3.BodyLarge"
+        app:itemTextColor="?attr/colorOnSurface"
+        app:itemIconPadding="16dp"
+        app:itemShapeInsetStart="16dp"
+        app:itemShapeInsetEnd="16dp"
+        app:itemHorizontalPadding="16dp"
+        app:itemVerticalPadding="12dp"
+        app:elevation="8dp"
+        app:divider="@android:color/transparent"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

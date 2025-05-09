@@ -5,22 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
+    android:padding="10dp"
+    android:background="#FFFFFF"
     tools:context=".RegisterActivity">
 
 
+
+    <!-- هذا الإطار سيحتوي على جميع العناصر مع ProgressBar فوقها -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_gravity="center"
-        android:layout_marginTop="25dp">
+        >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register"
+            android:text="@string/register"
             android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="#000"
@@ -28,66 +35,120 @@
             android:layout_marginVertical="16dp"/>
 
 
+        <!-- Email Input -->
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutEmail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="?attr/colorOnSurface"
+            app:boxBackgroundColor="?attr/colorSurface"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:hintEnabled="true"
+            android:hint="@string/email"
+            android:layout_marginTop="5dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etRegEmail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Email"
-                android:inputType="textEmailAddress"/>
+                android:layout_height="60dp"
+                android:inputType="textEmailAddress"
+                android:importantForAutofill="yes"
+                android:autofillHints="emailAddress"
+                android:imeOptions="actionNext"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
+
+
+
+
+
+        <!-- Password Input -->
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutPassword"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
+            app:boxStrokeColor="?attr/colorOnSurface"
+            app:boxBackgroundColor="?attr/colorSurface"
+            app:passwordToggleEnabled="true"
+            android:hint="@string/password"
+            android:layout_marginTop="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etRegPass"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Password"
-                android:inputType="textPassword"/>
+                android:layout_height="60dp"
+                android:inputType="textPassword"
+                android:importantForAutofill="yes"
+                android:autofillHints="password"
+                android:imeOptions="actionDone"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
+
+
+
+
+
+        <!-- Login Button -->
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Register"/>
+            android:text="@string/registration"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:background="@drawable/r4"
+            android:layout_marginTop="30dp"
+            app:cornerRadius="8dp"
+            app:iconGravity="textStart" />
 
+
+
+
+        <!-- Login Redirect -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
+            android:layout_marginTop="32dp"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tvLoginPrompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Already registered"
-                android:textSize="16sp"/>
+                android:text="@string/already_have_an_account"
+                android:textSize="14sp"
+                android:textColor="?attr/colorOnBackground" />
 
             <TextView
                 android:id="@+id/tvLoginHere"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="Login here"
-                android:textColor="#000"
+                android:layout_marginStart="4dp"
+                android:text="@string/log_in"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:textSize="20sp"/>
+                android:textColor="?attr/colorPrimary" />
 
         </LinearLayout>
 
+
     </LinearLayout>
+
+
+    <!-- ProgressBar سيظهر فوق جميع العناصر -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"/>
+</FrameLayout>
 
 </LinearLayout>

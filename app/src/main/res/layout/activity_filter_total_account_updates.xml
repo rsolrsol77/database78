@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
 
 
     <!-- Toolbar -->
@@ -16,49 +17,137 @@
         android:elevation="4dp" />
 
 
-    <EditText
-        android:id="@+id/start_date_edit_text"
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="التاريخ الأول (yyyy-MM-dd HH:mm:ss)"
-        android:inputType="datetime" />
+        android:orientation="vertical"
+        android:padding="18dp"
+        android:background="@drawable/r3">
 
-    <EditText
-        android:id="@+id/end_date_edit_text"
+
+
+    <!-- حقل التاريخ الأول -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/start_date_container"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="التاريخ الأخير (yyyy-MM-dd HH:mm:ss)"
-        android:inputType="datetime" />
+        app:helperText="@string/first_date">
 
-    <Button
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/start_date_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="yyyy-MM-dd HH:mm:ss"
+            android:inputType="datetime"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <!-- حقل التاريخ الأخير -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/end_date_container"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:helperText="@string/last_date">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/end_date_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="yyyy-MM-dd HH:mm:ss"
+            android:inputType="datetime"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/filter_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="فلترة" />
+        android:layout_marginTop="8dp"
+        android:background="@drawable/r1"
+        android:text="@string/filter"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
+
+    </LinearLayout>
 
 
-    <Spinner
-        android:id="@+id/currency_spinner"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:spinnerMode="dropdown" />
+        android:orientation="vertical"
+        android:background="#FFE0F3FF"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
 
 
-
-    <!-- TextView to display the sum of total_amount -->
-    <TextView
-        android:id="@+id/total_sum_text_view"
+    <!-- بطاقة عرض المجموع -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="مجموع القيم: 0"
-        android:textSize="18sp"
-        android:paddingTop="8dp" />
+        android:layout_weight="2"
+        app:cardBackgroundColor="#FFE0F3FF"
+        app:cardCornerRadius="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/total_imports"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/total_sum_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0.00"
+                android:textColor="#FF00668B"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+        <Spinner
+            android:id="@+id/currency_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            />
+
+
+
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/total_account_updates_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp" />
+        android:divider="#00000000"
+        android:dividerHeight="5dp"
+        android:layout_marginTop="10dp"/>
+
+
 </LinearLayout>

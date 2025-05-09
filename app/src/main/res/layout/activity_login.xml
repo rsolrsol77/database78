@@ -5,97 +5,203 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
-    tools:context=".LoginActivity">
+    android:padding="10dp"
+    tools:context=".LoginActivity"
+    android:background="#FBFBFB">
+
+
+
+
+    <!-- Title -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvLoginTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/log_in"
+        android:gravity="center"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_marginTop="16dp"/>
+
+
+
+
+    <!-- App Logo -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:contentDescription="App Logo" />
+
+
+
+
+
+    <!-- هذا الإطار سيحتوي على جميع العناصر مع ProgressBar فوقها -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_gravity="center"
-        android:layout_marginTop="25dp">
+        >
 
-        <TextView
+
+
+        <!-- Email Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutEmail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="#000"
-            android:gravity="center_horizontal"
-            android:layout_marginVertical="16dp"/>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_height="wrap_content">
+            app:boxStrokeColor="?attr/colorOnSurface"
+            app:boxBackgroundColor="?attr/colorSurface"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:hintEnabled="true"
+            android:hint="@string/email"
+            android:layout_marginTop="5dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etLoginEmail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Email"
-                android:inputType="textEmailAddress"/>
+                android:layout_height="60dp"
+                android:inputType="textEmailAddress"
+                android:importantForAutofill="yes"
+                android:autofillHints="emailAddress"
+                android:imeOptions="actionNext"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
+
+
+
+        <!-- Password Input -->
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutPassword"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
+            app:boxStrokeColor="?attr/colorOnSurface"
+            app:boxBackgroundColor="?attr/colorSurface"
+            app:passwordToggleEnabled="true"
+            android:hint="@string/password"
+            android:layout_marginTop="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etLoginPass"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Password"
-                android:inputType="textPassword"/>
+                android:layout_height="60dp"
+                android:inputType="textPassword"
+                android:importantForAutofill="yes"
+                android:autofillHints="password"
+                android:imeOptions="actionDone"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
+
+
+
+
+
+        <!-- Login Button -->
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Login"/>
+            android:text="@string/log_in"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:background="@drawable/r4"
+            android:layout_marginTop="30dp"
+            app:cornerRadius="8dp"
+            app:iconGravity="textStart" />
+
+
+
+
+
+
+
+
+        <!-- Register Link -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvRegisterHere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_a_new_account"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Not registered yet"
-                android:textSize="16sp"/>
 
-            <TextView
-                android:id="@+id/tvRegisterHere"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="Register here"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
 
-        </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-        <com.google.android.material.button.MaterialButton
+
+        <!-- Google Sign-In Button -->
+            <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_google_signin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="تسجيل الدخول بجوجل"
-            app:iconTint="@null"/>
+            android:text="@string/sing_in_with_google"
+            android:background="@drawable/r5"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp"
+            app:cornerRadius="8dp"
+            app:iconGravity="textStart" />
 
 
+            <!-- Title -->
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Miracle"
+                android:gravity="center"
+                android:textSize="16sp"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_marginTop="10dp"/>
+
+
+
+        </LinearLayout>
     </LinearLayout>
+
+
+
+
+    <!-- ProgressBar سيظهر فوق جميع العناصر -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"/>
+</FrameLayout>
+
+
 
 </LinearLayout>

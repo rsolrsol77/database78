@@ -71,7 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // أعمدة جدول التحديثات
-    private static final String TABLE_UPDATES = "updates";
+    public static final String TABLE_UPDATES = "updates";
     private static final String COLUMN_UPDATE_ID = "update_id";
     private static final String COLUMN_UPDATE_MESSAGE = "message";
     private static final String COLUMN_TIMESTAMP = "timestamp";
@@ -79,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // أعمدة جدول التحديثات الكلية
-    private static final String TABLE_TOTAL_ACCOUNT_UPDATES = "total_account_updates";  // جدول التحديثات الكلية
+    public static final String TABLE_TOTAL_ACCOUNT_UPDATES = "total_account_updates";  // جدول التحديثات الكلية
     private static final String COLUMN_TOTAL_ACCOUNT_ID = "total_account_id";
     private static final String COLUMN_TOTAL_TIMESTAMP = "total_timestamp";
 
@@ -291,22 +291,54 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         });
     }
 
+    // DatabaseHelper.java
+
     private static void syncTable(SQLiteDatabase db, DataSnapshot snapshot, String table) {
-        db.delete(table, null, null); // Clear existing data
+        // تفريغ البيانات المحلية للجدول
+        db.delete(table, null, null);
 
         for (DataSnapshot ds : snapshot.child(table).getChildren()) {
             ContentValues values = new ContentValues();
+            @SuppressWarnings("unchecked")
             Map<String, Object> map = (Map<String, Object>) ds.getValue();
 
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                if (entry.getValue() != null) {
-                    values.put(entry.getKey(), entry.getValue().toString());
-                }
+            // 1. نُعيّن المفتاح المناسب لكل جدول
+            if (TABLE_UPDATES.equals(table)) {
+                // مفتاح التحديثات
+                values.put(COLUMN_UPDATE_ID, ds.getKey());
+            }
+            else if (TABLE_TOTAL_ACCOUNT_UPDATES.equals(table)) {
+                // مفتاح التحديثات الكلية
+                values.put(COLUMN_TOTAL_ACCOUNT_ID, ds.getKey());
+            }
+            else {
+                // لبقية الجداول (records, sub_records, sales, sales_items)
+                // نستخدم "id" كمفتاح عام
+                values.put("id", ds.getKey());
             }
 
+            // 2. نُدرج باقي الحقول من خريطة القيم
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                String key = entry.getKey();
+                Object val = entry.getValue();
+                if (val == null) continue;
+
+                // نتجاهل الحقول التي عالجناها كمفاتيح
+                if (key.equals("id")
+                        || key.equals(COLUMN_UPDATE_ID)
+                        || key.equals(COLUMN_TOTAL_ACCOUNT_ID)) {
+                    continue;
+                }
+
+                values.put(key, val.toString());
+            }
+
+            // 3. إدراج السجل في SQLite
             db.insert(table, null, values);
         }
     }
+
+
 
     // تحويل ContentValues إلى Map ل Firebase
     public static Map<String, Object> valuesToMap(ContentValues values) {

@@ -1,13 +1,8 @@
-<!-- res/drawable/circular_button.xml -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#83C686"/>
-    <corners android:radius="50dp"/>
-    <padding android:left="10dp" android:top="10dp" android:right="10dp" android:bottom="10dp"/>
-
-
-    <stroke android:color="#080309"
-        android:width="3dp"/>
-
-    <corners android:radius="50dp"/>
-
+<!-- ملف: res/drawable/circular_shape.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@android:color/transparent"/>
+    <stroke
+        android:width="2dp"
+        android:color="#000000"/>
 </shape>

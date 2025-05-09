@@ -3,14 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:background="@drawable/m3">
 
     <!-- Main record fields -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:gravity="end">
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,20 +34,16 @@
         android:orientation="horizontal"
         android:layout_marginBottom="8dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name_warehouse"
-            android:textStyle="bold"
-            android:textColor="#4CAF50"
-            android:layout_marginEnd="4dp" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="24sp"/>
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,63 +51,55 @@
         android:orientation="horizontal"
         android:layout_marginBottom="8dp">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:text="@string/warehouse_location"
-            android:textColor="#4CAF50"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_course"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000000" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/warehouse_information"
-            android:textStyle="bold"
-            android:textColor="#4CAF50"
-            android:layout_marginEnd="4dp" />
 
         <TextView
             android:id="@+id/tv_fee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="16sp"/>
     </LinearLayout>
 
-    <!-- Sub-record fields -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/stocked_materials"
-        android:textStyle="bold"
-        android:textColor="#4CAF50"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="4dp" />
 
+
+
+    <!-- Buttons Row -->
     <LinearLayout
-        android:id="@+id/sub_record_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp"
-        android:background="#E0E0E0"
-        android:layout_marginTop="4dp">
-        <!-- العناصر الفرعية ستتم إضافتها ديناميكيًا هنا -->
+        android:orientation="horizontal"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/tv_edit_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit"
+            android:textColor="#212121"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:background="@drawable/m4"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:id="@+id/tv_show_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_details"
+            android:textColor="#212121"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/m4"
+            />
     </LinearLayout>
+
+
+
 
 </LinearLayout>
