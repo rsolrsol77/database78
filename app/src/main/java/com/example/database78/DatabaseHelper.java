@@ -191,10 +191,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-
-
-
     }
+
+
+
+    public boolean hasPendingOperations() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_PENDING_OPERATIONS, null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        cursor.close();
+        db.close();
+        return count > 0;
+    }
+
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

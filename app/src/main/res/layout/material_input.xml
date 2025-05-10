@@ -13,9 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/m1"
-        android:inputType="text"
         android:gravity="center"
-        android:hint="@string/double_click_to_select_a_subject" />
+        android:hint="@string/double_click_to_select_a_subject"
+        android:focusable="false"
+        android:clickable="true"
+        android:cursorVisible="false"
+        android:inputType="none"/>
 
 
     <LinearLayout

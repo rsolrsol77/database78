@@ -78,6 +78,13 @@
 
 
 
+    <string name="warning">Warning</string>
+    <string name="pending_operations_warning">There is data that needs an internet connection to complete saving!</string>
+    <string name="logout_anyway">Logout Anyway</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm_logout">Confirm Logout</string>
+    <string name="logout_confirmation_message">You will be logged out now</string>
+    <string name="logout">Logout</string>
 
 
 

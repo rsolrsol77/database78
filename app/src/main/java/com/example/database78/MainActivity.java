@@ -142,14 +142,7 @@ public class MainActivity extends AppCompatActivity {
             }else if (id == R.id.nav_change_language) {
                 showLanguageDialog();
             } else if (id == R.id.btnLogOut) {
-                mAuth.signOut();
-                GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut()
-                        .addOnCompleteListener(task -> {
-                            // حذف قاعدة البيانات المحلية
-                            getApplicationContext().deleteDatabase("SliteDb.db");
-                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                            finish();
-                        });
+                checkPendingOperationsBeforeLogout(); // التعديل هنا
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
@@ -365,6 +358,58 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .show();
     }
+
+
+
+
+
+
+//دوال خاصة بزر تسجيل الخروج من هنا
+    private void checkPendingOperationsBeforeLogout() {
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        boolean hasPending = dbHelper.hasPendingOperations();
+        dbHelper.close();
+
+        if (hasPending) {
+            showPendingOperationsAlert();
+        } else {
+            showNormalLogoutConfirmation();
+        }
+    }
+
+    private void showPendingOperationsAlert() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.warning)
+                .setMessage(R.string.pending_operations_warning)
+                .setPositiveButton(R.string.logout_anyway, (dialog, which) -> performLogout())
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private void showNormalLogoutConfirmation() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.confirm_logout)
+                .setMessage(R.string.logout_confirmation_message)
+                .setPositiveButton(R.string.logout, (dialog, which) -> performLogout())
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private void performLogout() {
+        mAuth.signOut();
+        GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut()
+                .addOnCompleteListener(task -> {
+                    getApplicationContext().deleteDatabase("SliteDb.db");
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    finish();
+                });
+    }
+
+
+//الى هنا
+
+
+
 
 
 

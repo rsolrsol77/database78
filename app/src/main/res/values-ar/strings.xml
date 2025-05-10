@@ -27,7 +27,7 @@
     <string name="enter_amount">أدخل المبلغ</string>
     <string name="optional">(أختياري)</string>
     <string name="click_to_add_an_item">أضغط لأضافة مادة</string>
-    <string name="double_click_to_select_a_subject">أضغط مرتين لأختيار مادة</string>
+    <string name="double_click_to_select_a_subject">أضغط لأختيار مادة</string>
     <string name="unity">الوحدة</string>
     <string name="quantityy">الكمية</string>
     <string name="id">: id</string>
@@ -64,6 +64,14 @@
 
 
 
+
+    <string name="warning">تحذير</string>
+    <string name="pending_operations_warning">يوجد بيانات تحتاج إلى اتصال بالإنترنت لإكمال حفظها!</string>
+    <string name="logout_anyway">خروج على أي حال</string>
+    <string name="cancel">إلغاء</string>
+    <string name="confirm_logout">تأكيد الخروج</string>
+    <string name="logout_confirmation_message">سيتم تسجيل خروجك الآن</string>
+    <string name="logout">تسجيل الخروج</string>
 
 
 
