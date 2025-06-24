@@ -79,15 +79,15 @@
 
 
     <string-array name="units_array">
-        <item>عدد</item>
-        <item>غرام</item>
-        <item>كغم</item>
-        <item>طن</item>
-        <item>سم</item>
-        <item>لتر</item>
-        <item>متر</item>
-        <item>مليمتر</item>
-        <item>كيلومتر</item>
+        <item>عدد_Piece</item>
+        <item>غرام_Gram</item>
+        <item>كغم_Kilogram</item>
+        <item>طن_Tonne</item>
+        <item>سم_Centimeter</item>
+        <item>لتر_Liter</item>
+        <item>متر_Meter</item>
+        <item>مليمتر_Millimeter</item>
+        <item>كيلومتر_Kilometer</item>
     </string-array>
 
 

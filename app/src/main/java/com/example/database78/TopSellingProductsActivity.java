@@ -27,6 +27,12 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +46,47 @@ public class TopSellingProductsActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private List<String> unitsList;
 
+
+    //admob
+    private InterstitialAd mInterstitialAd;
+    private final String AD_UNIT_ID = "ca-app-pub-9825698675981083/1914005401";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_selling_products);
+
+
+
+
+
+
+
+
+        //admob
+        // 1. تحميل الإعلان
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(this, AD_UNIT_ID, adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        mInterstitialAd = interstitialAd;
+                        // 2. عرض الإعلان مباشرة
+                        showInterstitial();
+                    }
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // فشل التحميل → تابع العمل الطبيعي
+                    }
+                });
+
+
+
+
+
+
+
 
         // إعداد الـ Toolbar
         Toolbar toolbar = findViewById(R.id.tool_bar);
@@ -69,6 +112,36 @@ public class TopSellingProductsActivity extends AppCompatActivity {
         // تحميل البيانات لأول مرة بدون تصفية
         loadTopSellingProducts(null);
     }
+
+
+
+
+
+
+
+    //admob
+    private void showInterstitial() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    // بعد إغلاق الإعلان، يمكن متابعة تهيئة الواجهة
+                }
+                @Override
+                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                    // إذا فشل العرض، تتابع كالمعتاد
+                }
+            });
+            mInterstitialAd.show(this);
+        }
+    }
+
+
+
+
+
+
+
 
     /**
      * جلب الوحدات الفريدة من قاعدة البيانات وإعداد Spinner

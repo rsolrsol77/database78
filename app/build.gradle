@@ -31,6 +31,7 @@ android {
 
 dependencies {
 
+    implementation 'com.google.android.gms:play-services-ads:22.4.0'  // أحدث إصدار ثابت
 
     implementation "androidx.work:work-runtime:2.7.1"
 

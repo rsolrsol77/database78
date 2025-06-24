@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class UpdatesFragment extends Fragment {
 
@@ -66,9 +67,12 @@ public class UpdatesFragment extends Fragment {
         }
 
         SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        dbFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
 
 
         SimpleDateFormat displayFormat = new SimpleDateFormat("dd MMM yyyy, HH:mm:ss", Locale.getDefault());
+        displayFormat.setTimeZone(TimeZone.getDefault());
 
 
         try {

@@ -23,6 +23,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +37,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+
 
 public class FilterTotalAccountUpdatesActivity extends AppCompatActivity {
 
@@ -40,11 +49,46 @@ public class FilterTotalAccountUpdatesActivity extends AppCompatActivity {
     TextView totalSumTextView;
     Spinner currencySpinner;
 
+
+    //admob
+    private InterstitialAd mInterstitialAd;
+    private final String AD_UNIT_ID = "ca-app-pub-9825698675981083/2059083864"; // مثال Test ID
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_total_account_updates);
+
+
+
+
+
+
+        //admob
+        // 1. تحميل الإعلان
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(this, AD_UNIT_ID, adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        mInterstitialAd = interstitialAd;
+                        // 2. عرض الإعلان مباشرة
+                        showInterstitial();
+                    }
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // فشل التحميل → تابع العمل الطبيعي
+                    }
+                });
+
+
+
+
+
+
+
 
         // إعداد Toolbar
         Toolbar toolbar = findViewById(R.id.tool_bar);
@@ -91,6 +135,34 @@ public class FilterTotalAccountUpdatesActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
+
+
+
+
+
+
+    //admob
+    private void showInterstitial() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    // بعد إغلاق الإعلان، يمكن متابعة تهيئة الواجهة
+                }
+                @Override
+                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                    // إذا فشل العرض، تتابع كالمعتاد
+                }
+            });
+            mInterstitialAd.show(this);
+        }
+    }
+
+
+
+
+
+
 
     private void setupCurrencySpinner() {
         List<String> currencies = getCurrenciesFromDatabase();

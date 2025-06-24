@@ -105,24 +105,34 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            userEmail.setText(user.getEmail()); // عرض البريد الإلكتروني
-            userName.setText(user.getDisplayName());
+            userEmail.setText(user.getEmail());
+
+            // التحقق من وجود اسم المستخدم
+            if (user.getDisplayName() != null && !user.getDisplayName().isEmpty()) {
+                userName.setText(user.getDisplayName());
+            } else {
+                // استخدام البريد الإلكتروني كاسم مؤقت
+                userName.setText(user.getEmail());
+            }
+
+            // معالجة صورة المستخدم
             if (user.getPhotoUrl() != null) {
                 Glide.with(this)
                         .load(user.getPhotoUrl())
-                        .apply(RequestOptions.bitmapTransform(new CircleCrop())) // أضف هذا السطر
+                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        .into(userImage);
+            } else {
+                Glide.with(this)
+                        .load(R.drawable.profile2)
+                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                         .into(userImage);
             }
-
 
             // استعادة البيانات من Firebase إذا كان هناك اتصال
             if (isNetworkConnected()) {
                 DatabaseHelper.syncFromFirebase(this);
-
-                DatabaseHelper.syncPendingOperations(MainActivity.this); // إضافة هذا السطر بعد syncFromFirebase
-
+                DatabaseHelper.syncPendingOperations(MainActivity.this);
             }
-
         }
 
 

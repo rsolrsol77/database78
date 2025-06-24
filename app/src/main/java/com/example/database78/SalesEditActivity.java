@@ -22,10 +22,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -45,11 +52,43 @@ public class SalesEditActivity extends AppCompatActivity {
     ArrayList<TextView> subQuantityViews = new ArrayList<>();
     ArrayList<TextView> subUnitViews = new ArrayList<>();  // قائمة للوحدات (Unit) كـ TextView
 
+
+    //admob
+    private InterstitialAd mInterstitialAd;
+    private final String AD_UNIT_ID = "ca-app-pub-9825698675981083/4859732947";
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_edit);
+
+
+
+
+        //admob
+        // 1. تحميل الإعلان
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(this, AD_UNIT_ID, adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        mInterstitialAd = interstitialAd;
+                        // 2. عرض الإعلان مباشرة
+                        showInterstitial();
+                    }
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // فشل التحميل → تابع العمل الطبيعي
+                    }
+                });
+
+
+
+
+
+
+
 
         dbHelper = new DatabaseHelper(this);
 
@@ -113,6 +152,37 @@ public class SalesEditActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
+
+
+    //admob
+    private void showInterstitial() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    // بعد إغلاق الإعلان، يمكن متابعة تهيئة الواجهة
+                }
+                @Override
+                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                    // إذا فشل العرض، تتابع كالمعتاد
+                }
+            });
+            mInterstitialAd.show(this);
+        }
+    }
+
+
+
+
+
+
+
+
+
 
     // دالة لتحميل السجلات الفرعية
     @SuppressLint("Range")

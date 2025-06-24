@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -20,6 +21,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,11 +45,43 @@ public class RevenueAnalysisActivity extends AppCompatActivity {
     private TextView tvRevenueSummary;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
+
+
+    //admob
+    private InterstitialAd mInterstitialAd;
+    private final String AD_UNIT_ID = "ca-app-pub-9825698675981083/4540168745";
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_revenue_analysis);
+
+
+
+
+
+
+        //admob
+        // 1. تحميل الإعلان
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(this, AD_UNIT_ID, adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        mInterstitialAd = interstitialAd;
+                        // 2. عرض الإعلان مباشرة
+                        showInterstitial();
+                    }
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // فشل التحميل → تابع العمل الطبيعي
+                    }
+                });
+
+
+
+
 
 
 
@@ -75,6 +114,36 @@ public class RevenueAnalysisActivity extends AppCompatActivity {
         setupListeners();
         loadData("يومي", "ALL");
     }
+
+
+
+
+
+
+
+    //admob
+    private void showInterstitial() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    // بعد إغلاق الإعلان، يمكن متابعة تهيئة الواجهة
+                }
+                @Override
+                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                    // إذا فشل العرض، تتابع كالمعتاد
+                }
+            });
+            mInterstitialAd.show(this);
+        }
+    }
+
+
+
+
+
+
+
 
     private void setupListeners() {
         spinnerPeriod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

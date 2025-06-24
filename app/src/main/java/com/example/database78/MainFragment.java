@@ -42,6 +42,8 @@ public class MainFragment extends Fragment {
     // تعريف المتغيرات الخاصة بـ MainActivity
     EditText edName, edCourse, edFee, edMaterial, edQuantity;
     Button btnAddRecord, btnAddSubRecord, btnSelectRecord ;
+
+    TextView nameCounter, courseCounter, feeCounter, materialCounter, quantityCounter;
     LinearLayout btnMainRecord ,  btnSubRecord;
     DatabaseHelper dbHelper;
     ViewGroup mainRecordLayout, subRecordLayout;
@@ -75,13 +77,25 @@ public class MainFragment extends Fragment {
 
         // ربط المتغيرات
 
-
         edName = view.findViewById(R.id.name);
         edCourse = view.findViewById(R.id.course);
         edFee = view.findViewById(R.id.fee);
         edMaterial = view.findViewById(R.id.material);
         edQuantity = view.findViewById(R.id.quantity);
         spinnerUnit = view.findViewById(R.id.spinner_unit);
+
+
+
+
+        // ربط عدّادات الأحرف من ملف الـ XML
+        nameCounter     = view.findViewById(R.id.name_counter);
+        courseCounter   = view.findViewById(R.id.course_counter);
+        feeCounter      = view.findViewById(R.id.fee_counter);
+        materialCounter = view.findViewById(R.id.material_counter);
+        quantityCounter = view.findViewById(R.id.quantity_counter);
+
+
+
 
 
         btnAddRecord = view.findViewById(R.id.bt1);
@@ -119,6 +133,14 @@ public class MainFragment extends Fragment {
 
 
 
+        // تهيئة عدّادات الأحرف في البداية (يشير إلى "0 / max")
+        updateCounter(edName, nameCounter, 20);
+        updateCounter(edCourse, courseCounter, 25);
+        updateCounter(edFee, feeCounter, 30);
+        updateCounter(edMaterial, materialCounter, 25);
+        updateCounter(edQuantity, quantityCounter, 10);
+
+
 
 
         // إضافة مراقب النصوص للتحقق من الحقول
@@ -145,6 +167,77 @@ public class MainFragment extends Fragment {
         edFee.addTextChangedListener(textWatcher);
         edMaterial.addTextChangedListener(textWatcher);
         edQuantity.addTextChangedListener(textWatcher);
+
+
+
+
+
+
+        // إضافة TextWatcher لكل حقل من أجل تحديث عدّاد الأحرف
+        edName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {  }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                updateCounter(edName, nameCounter, 20);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {  }
+        });
+
+        edCourse.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {  }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                updateCounter(edCourse, courseCounter, 25);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {  }
+        });
+
+        edFee.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {  }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                updateCounter(edFee, feeCounter, 30);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {  }
+        });
+
+        edMaterial.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {  }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                updateCounter(edMaterial, materialCounter, 25);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {  }
+        });
+
+        edQuantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {  }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                updateCounter(edQuantity, quantityCounter, 10);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {  }
+        });
 
 
 
@@ -200,6 +293,22 @@ public class MainFragment extends Fragment {
 
 
     }
+
+
+
+
+
+
+    /**
+     * دالة لتحديث نص عدّاد الأحرف: "currentLength / maxLength"
+     */
+    private void updateCounter(EditText editText, TextView counterTextView, int maxLength) {
+        int currentLength = editText.getText().toString().length();
+        String counterText = currentLength + "/" + maxLength;
+        counterTextView.setText(counterText);
+    }
+
+
 
 
 

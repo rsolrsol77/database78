@@ -116,7 +116,8 @@
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:gravity="center"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="23dp"/>
 
 
 
@@ -140,14 +141,27 @@
             android:maxLength="20"
             android:background="@drawable/m1" />
 
+
+        <!-- تحت EditText الخاص بالاسم -->
+        <TextView
+            android:id="@+id/name_counter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0/20"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:gravity="end"
+            android:paddingTop="2dp" />
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="8dp"
             android:text="@string/warehouse_location"
             android:textSize="18sp"
-            android:paddingTop="16dp"
-            android:textStyle="bold"
-            android:paddingBottom="8dp" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/course"
@@ -160,12 +174,27 @@
             android:maxLength="25"
             android:textAlignment="center" />
 
+
+        <!-- تحت EditText الخاص بالموقع -->
+        <TextView
+            android:id="@+id/course_counter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0/25"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:gravity="end"
+            android:paddingTop="2dp" />
+
+
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/warehouse_information"
             android:textSize="16sp"
-            android:paddingTop="18dp"
+            android:paddingTop="10dp"
             android:textStyle="bold"
             android:paddingBottom="8dp" />
 
@@ -179,19 +208,37 @@
             android:background="@drawable/m1"
             android:maxLength="30"/>
 
+
+        <!-- تحت EditText الخاص بالملاحظات (fee) -->
+        <TextView
+            android:id="@+id/fee_counter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0/30"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:gravity="end"
+            android:paddingTop="2dp" />
+
+
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/created"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/r1"
-            android:textStyle="bold"
-            android:textColor="@android:color/white" />
+            android:text="@string/created"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
     </LinearLayout>
     </ScrollView>
 
+
     <!-- واجهة إدخال البيانات للسجل الفرعي -->
+
+
     <ScrollView
         android:id="@+id/sub_record_layout"
         android:layout_width="match_parent"
@@ -214,7 +261,7 @@
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:gravity="center"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="10dp"/>
 
 
 
@@ -225,7 +272,7 @@
             android:text="@string/select_main_record"
             android:background="@drawable/r1"
             android:textStyle="bold"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:textColor="@android:color/white" />
 
 
@@ -239,7 +286,7 @@
             android:paddingTop="8dp"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginVertical="40dp"
+            android:layout_marginVertical="20dp"
             android:textColor="@android:color/black" />
 
 
@@ -263,6 +310,18 @@
             android:padding="8dp" />
 
 
+        <!-- تحت EditText الخاص بالمادة (material) -->
+        <TextView
+            android:id="@+id/material_counter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0/25"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:gravity="end"
+            android:paddingTop="2dp" />
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -274,9 +333,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/quantity"
                 android:textSize="18sp"
-                android:paddingTop="16dp"
                 android:textStyle="bold"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:paddingBottom="8dp" />
 
 
@@ -287,17 +345,38 @@
                 android:gravity="center">
 
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
                 <EditText
                     android:id="@+id/quantity"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_weight="2"
                     android:hint="@string/enter_quantity"
                     android:inputType="number"
                     android:textAlignment="center"
                     android:maxLength="10"
                     android:background="@drawable/m1"
                     android:padding="8dp" />
+
+
+                <!-- تحت EditText الخاص بالكمية (quantity) -->
+                <TextView
+                    android:id="@+id/quantity_counter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0/10"
+                    android:textSize="14sp"
+                    android:textColor="#666666"
+                    android:gravity="end"
+                    android:paddingTop="2dp" />
+
+
+                </LinearLayout>
 
 
 
@@ -319,7 +398,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/add_sub_record"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/r1"
             android:textStyle="bold"
             android:textColor="@android:color/white" />

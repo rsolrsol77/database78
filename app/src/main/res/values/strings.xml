@@ -3,15 +3,15 @@
 
 
     <string-array name="units_array">
-        <item>Piece</item>
-        <item>Gram</item>
-        <item>Kilogram</item>
-        <item>Tonne</item>
-        <item>Centimeter</item>
-        <item>Liter</item>
-        <item>Meter</item>
-        <item>Millimeter</item>
-        <item>Kilometer</item>
+        <item>عدد_Piece</item>
+        <item>غرام_Gram</item>
+        <item>كغم_Kilogram</item>
+        <item>طن_Tonne</item>
+        <item>سم_Centimeter</item>
+        <item>لتر_Liter</item>
+        <item>متر_Meter</item>
+        <item>مليمتر_Millimeter</item>
+        <item>كيلومتر_Kilometer</item>
     </string-array>
 
 
@@ -91,26 +91,26 @@
 
 
     <string-array name="currency_array">
-        <!-- Arabic Currencies -->
-        <item>Iraqi Dinar (IQD)</item>
-        <item>Saudi Riyal (SAR)</item>
-        <item>UAE Dirham (AED)</item>
-        <item>Bahraini Dinar (BHD)</item>
-        <item>Kuwaiti Dinar (KWD)</item>
-        <item>Qatari Riyal (QAR)</item>
-        <item>Egyptian Pound (EGP)</item>
-        <item>Lebanese Pound (LBP)</item>
-        <item>Iranian Rial (IRR)</item>
+        <!-- عملات عربية -->
+        <item>دينار عراقي (IQD)</item>
+        <item>ريال سعودي (SAR)</item>
+        <item>درهم إماراتي (AED)</item>
+        <item>دينار بحريني (BHD)</item>
+        <item>دينار كويتي (KWD)</item>
+        <item>ريال قطري (QAR)</item>
+        <item>جنيه مصري (EGP)</item>
+        <item>ليرة لبنانية (LBP)</item>
+        <item>ريال إيراني (IRR)</item>
 
-        <!-- Global Currencies -->
-        <item>US Dollar (USD)</item>
-        <item>Euro (EUR)</item>
-        <item>British Pound (GBP)</item>
-        <item>Japanese Yen (JPY)</item>
-        <item>Chinese Yuan (CNY)</item>
-        <item>Indian Rupee (INR)</item>
-        <item>Canadian Dollar (CAD)</item>
-        <item>Swiss Franc (CHF)</item>
+        <!-- عملات عالمية -->
+        <item>دولار أمريكي (USD)</item>
+        <item>يورو (EUR)</item>
+        <item>جنيه إسترليني (GBP)</item>
+        <item>ين ياباني (JPY)</item>
+        <item>يوان صيني (CNY)</item>
+        <item>روبية هندية (INR)</item>
+        <item>دولار كندي (CAD)</item>
+        <item>فرنك سويسري (CHF)</item>
     </string-array>
 
 
