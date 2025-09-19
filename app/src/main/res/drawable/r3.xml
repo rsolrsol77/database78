@@ -24,7 +24,7 @@
         <shape>
             <solid android:color="#9CD39E" /> <!-- لون الخلفية الأساسي -->
             <corners android:radius="12dp" />
-            <stroke android:width="2dp" android:color="#FFFFFF" />
+            <stroke android:width="4dp" android:color="#FFFFFF" />
             <padding android:left="16dp" android:right="16dp" android:top="8dp" android:bottom="8dp" />
         </shape>
     </item>

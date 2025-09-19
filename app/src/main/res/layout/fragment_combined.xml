@@ -2,17 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="10dp"
     android:background="#F5F5F5">
+
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="right"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp">
+        android:layout_marginVertical="10dp"
+        android:layout_marginTop="5dp">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnRecords"
@@ -34,12 +42,12 @@
             android:textColor="@drawable/btn_text_selector"
             android:textStyle="bold" />
     </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:divider="#00000000"
         android:dividerHeight="5dp"
         />

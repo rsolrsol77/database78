@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="3dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/r3">
+
+        <!-- ID -->
+        <TextView
+            android:id="@+id/tvSubId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:gravity="center" />
+
+        <!-- مادة -->
+        <EditText
+            android:id="@+id/etSubMaterial"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:hint="@string/header_material"
+            android:maxLength="25"
+            android:background="@drawable/m1"
+            android:layout_marginEnd="2dp" />
+
+        <!-- كمية -->
+        <EditText
+            android:id="@+id/etSubQuantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="numberDecimal"
+            android:hint="@string/header_quantity"
+            android:maxLength="10"
+            android:background="@drawable/m1"
+            android:layout_marginEnd="2dp" />
+
+        <!-- وحدة -->
+        <Spinner
+            android:id="@+id/spSubUnit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+        <!-- زر حذف -->
+        <ImageButton
+            android:id="@+id/btnDeleteSub"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/baseline_delete_24"
+            android:contentDescription="@string/delete"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

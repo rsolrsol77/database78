@@ -148,10 +148,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="0/20"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="#666666"
             android:gravity="end"
-            android:paddingTop="2dp" />
+            />
 
 
         <TextView
@@ -181,10 +181,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="0/25"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="#666666"
             android:gravity="end"
-            android:paddingTop="2dp" />
+            />
 
 
 
@@ -215,10 +215,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="0/30"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="#666666"
             android:gravity="end"
-            android:paddingTop="2dp" />
+             />
 
 
 
@@ -316,10 +316,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="0/25"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="#666666"
             android:gravity="end"
-            android:paddingTop="2dp" />
+             />
 
 
         <LinearLayout
@@ -370,10 +370,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="0/10"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:textColor="#666666"
                     android:gravity="end"
-                    android:paddingTop="2dp" />
+                     />
 
 
                 </LinearLayout>

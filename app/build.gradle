@@ -4,15 +4,15 @@ plugins {
 }
 
 android {
-    namespace 'com.example.database78'
-    compileSdk 34
+    namespace 'com.demo.database78'
+    compileSdk 35
 
     defaultConfig {
-        applicationId "com.example.database78"
+        applicationId "com.demo.database78"
         minSdk 26
-        targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        targetSdk 35
+        versionCode 7
+        versionName "1.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -31,46 +31,40 @@ android {
 
 dependencies {
 
-    implementation 'com.google.android.gms:play-services-ads:22.4.0'  // أحدث إصدار ثابت
-
-    implementation "androidx.work:work-runtime:2.7.1"
-
-
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    // Use Firebase BoM to manage versions for all Firebase libraries
+    implementation platform('com.google.firebase:firebase-bom:32.2.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 
 
-    implementation 'com.github.bumptech.glide:glide:4.15.1'
-    implementation 'com.caverock:androidsvg:1.4'
+    // Firebase libraries (no versions when using BoM)
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-auth'
 
-
-    implementation 'com.google.firebase:firebase-database:20.3.0'
-
+    // Google Play services
+    implementation 'com.google.android.gms:play-services-ads:22.4.0'
     implementation 'com.google.android.gms:play-services-auth:20.7.0'
-    implementation 'com.google.firebase:firebase-auth:22.3.1'
 
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
-    implementation 'com.google.android.gms:play-services-auth:19.2.0'
-
-
+    // AndroidX & UI
+    implementation "androidx.work:work-runtime:2.7.1"
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
     implementation 'com.google.android.material:material:1.6.0'
-
-
-
-
-
-
-
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
     implementation libs.recyclerview
-    implementation libs.firebase.auth
+
+    // Third-party libraries
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    implementation 'com.caverock:androidsvg:1.4'
+
+    // Testing
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core

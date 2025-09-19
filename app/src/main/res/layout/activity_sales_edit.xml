@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
 
@@ -24,7 +25,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="5dp"
+        android:padding="2dp"
         android:layout_marginTop="?attr/actionBarSize"
         tools:context=".edit">
 
@@ -32,10 +33,19 @@
 
 
 
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#FFE0F3FF"
+            app:cardCornerRadius="8dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginVertical="5dp"
             android:gravity="center"
             android:background="@drawable/r3">
 
@@ -56,14 +66,23 @@
                 android:textStyle="bold"
                  />
         </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
 
 
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:cardBackgroundColor="#FFE0F3FF"
+            app:cardCornerRadius="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginVertical="5dp"
         android:gravity="center">
 
         <LinearLayout
@@ -80,7 +99,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/buyer_name"
                 android:textSize="16sp"
-                android:layout_marginTop="5dp"
                 android:textStyle="bold"
                 android:paddingBottom="5dp" />
 
@@ -110,7 +128,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/phone"
                 android:textSize="16sp"
-                android:layout_marginTop="5dp"
                 android:textStyle="bold"
                 android:paddingBottom="5dp" />
 
@@ -127,13 +144,24 @@
         </LinearLayout>
 
     </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
 
+
+
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#FFE0F3FF"
+            app:cardCornerRadius="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginVertical="5dp"
         android:gravity="center">
 
         <LinearLayout
@@ -150,7 +178,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/address"
                 android:textSize="16sp"
-                android:layout_marginTop="5dp"
                 android:textStyle="bold"
                 android:paddingBottom="8dp" />
 
@@ -181,7 +208,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/purchase_date"
                 android:textSize="16sp"
-                android:layout_marginTop="5dp"
                 android:textStyle="bold"
                 android:paddingBottom="8dp" />
 
@@ -198,13 +224,23 @@
         </LinearLayout>
 
     </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
 
+
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#FFE0F3FF"
+            app:cardCornerRadius="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginVertical="5dp"
         android:gravity="center">
 
         <TextView
@@ -212,10 +248,9 @@
             android:layout_height="wrap_content"
             android:text="@string/final_amount"
             android:textSize="16sp"
-            android:paddingTop="5dp"
             android:gravity="center"
             android:textStyle="bold"
-            android:paddingBottom="8dp" />
+            android:paddingBottom="5dp" />
 
 
         <LinearLayout
@@ -227,10 +262,10 @@
 
             <EditText
                 android:id="@+id/total_amount"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="number"
+                android:layout_weight="2"
+                android:inputType="numberDecimal"
                 android:background="@drawable/m1"
                 android:maxLength="10"
                 android:hint="@string/enter_amount" />
@@ -240,21 +275,36 @@
 
             <TextView
                 android:id="@+id/currency"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_marginStart="3dp"
                 android:text="العملة"
                 android:textStyle="bold" />
 
 
         </LinearLayout>
     </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
+
+
+
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#FFE0F3FF"
+            app:cardCornerRadius="8dp">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginVertical="5dp"
         android:gravity="center">
 
         <LinearLayout
@@ -272,8 +322,7 @@
                 android:text="@string/order_information"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:paddingBottom="8dp" />
+                android:paddingBottom="5dp" />
 
 
 
@@ -304,9 +353,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/order_status"
                 android:textSize="16sp"
-                android:layout_marginTop="5dp"
                 android:textStyle="bold"
-                android:paddingBottom="8dp" />
+                android:paddingBottom="5dp" />
 
 
             <EditText
@@ -321,60 +369,102 @@
         </LinearLayout>
 
     </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
 
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/items_sold"
-        android:textSize="16sp"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:paddingBottom="8dp" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:cardBackgroundColor="#FFE0F3FF"
+            app:cardCornerRadius="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/items_sold"
+                android:layout_gravity="center"
+                android:layout_marginVertical="4dp"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+        </com.google.android.material.card.MaterialCardView>
 
 
     <!-- منطقة عرض وتعديل السجلات الفرعية داخل ScrollView -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/border"> <!-- وزن مرن يسمح لها بشغل المساحة المناسبة -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#FFE0F3FF"
+            app:cardCornerRadius="8dp">
+
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/sub_records_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
-    </ScrollView>
+
+      </LinearLayout>
+            </ScrollView>
+        </com.google.android.material.card.MaterialCardView>
 
 
+
+
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:cardBackgroundColor="#FFE0F3FF"
+            app:cardCornerRadius="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
+        android:layout_marginVertical="5dp"
         android:layout_marginTop="8dp">
 
 
         <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/edit"
+            android:id="@+id/btn_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit"
             android:background="@drawable/r2"
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:drawableEnd="@drawable/baseline_edit_document_24"/>
 
         <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_delete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/delete"
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
             android:layout_marginTop="5dp"
             android:background="@drawable/r2"
             android:textStyle="bold"
@@ -382,7 +472,7 @@
             android:drawableEnd="@drawable/baseline_delete_24"/>
 
     </LinearLayout>
-
+        </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>
 </FrameLayout>
